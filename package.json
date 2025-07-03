@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve ",
-    "build": "ng build -c prod",
+    "build": "ng build -c dev",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "serve:ssr:pulqui-customer": "node dist/pulqui-customer/server/server.mjs"
