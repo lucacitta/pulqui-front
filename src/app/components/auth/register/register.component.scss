@@ -1,0 +1,155 @@
+.main-wrapper {
+    padding: 1rem;
+    max-width: 25rem;
+    max-height: 80vh
+  }
+  
+.logo-title-wrapper {
+  /* display: flex; */
+  text-align: center;
+}
+  
+.logo-wrapper {
+  padding-bottom: 0px;
+  padding: 0.25rem;
+}
+
+.title-wrapper {
+  /* //   margin-left: 0.25rem; */
+  h1 {
+    margin: 0 0 5px;
+    font-size: large;
+  }
+  h2 {
+    font-size: 0.9rem;
+  }
+}
+
+.logo {
+  width: 5rem;
+}
+
+.form-field-user {
+  width: 100%;
+}
+  
+mat-form-field {
+  width: 100%;
+}
+mat-form-field.form-field-user {
+  margin-bottom: 5px !important;
+}
+
+.action-form-wrapper {
+  width: 100%;
+  .submit-button {
+    width: 100%;
+  }
+}
+
+.footer-wrapper {
+  text-align: center;
+  .footer-text {
+    color: #3f3f3f;
+    font-weight: 400;
+  }
+  a {
+    cursor: pointer;
+    font-weight: 500;
+  }
+}
+
+.register-btns{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  button{
+    margin: 10px 0;
+    width: 200px;
+  }
+}
+
+.register-ico-back{
+  position: absolute;
+  top: -70px;
+  left: -30px;
+  cursor: pointer;
+  display: flex;
+  p{
+    font-size: 0.8em;
+    margin: 0;
+    line-height: 2;
+  }
+}
+
+.separator-wrapper {
+  font-size: 0.875em;
+  margin: 1.1em 0px 0px;
+  line-height: 1em;
+  font-weight: 400;
+  color: #666666;
+  position: relative;
+  text-align: center;
+  span {
+    display: inline-block;
+    height: 14px;
+  }
+  &::before {
+    left: 0px;
+    margin-right: 0.5em;
+    position: absolute;
+    display: inline-block;
+    content: '';
+    top: 50%;
+    width: calc(50% - 9em);
+    height: 0px;
+    border-bottom: 1px solid rgb(204, 204, 204);
+  }
+  &::after {
+    right: 0px;
+    margin-left: 0.5em;
+    position: absolute;
+    display: inline-block;
+    content: '';
+    top: 50%;
+    width: calc(50% - 9em);
+    height: 0px;
+    border-bottom: 1px solid rgb(204, 204, 204);
+  }
+}
+
+:host::ng-deep {
+  .mat-tab-header-pagination{
+    display: none !important
+  }
+  .main-wrapper{
+    .mat-tab-group{
+
+    }
+  }
+}
+
+.eye-ico{
+  position: absolute;
+  right: 0;
+  top: 50%; /* Inicialmente colocamos la parte superior en el centro vertical del contenedor */
+  transform: translateY(-40%); 
+  cursor: pointer;
+}
+
+:host::ng-deep mat-checkbox.checkbox-register label {
+  display: block;
+  white-space: break-spaces;
+}
+
+.politica-datos {
+  color: rgb(0, 128, 128);
+  font-weight: 400;
+}
+
+.regresarlogin{
+  margin-bottom: 40px
+}
+  

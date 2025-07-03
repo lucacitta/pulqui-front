@@ -1,0 +1,35 @@
+<section class="relative overflow-hidden h-[270px] sm:h-[400px] mt-4">
+  <div class="h-full flex transition-transform duration-500 ease-in-out"
+    [ngStyle]="{ 'transform': 'translateX(-' + currentIndex * 100 + '%)' }">
+    <div *ngFor="let banner of visibleBanners; let i = index" class="w-full flex-shrink-0 relative">
+      <!-- si no tiene path, abre diálogo de login -->
+      <div *ngIf="!banner.path" class="block w-full h-full cursor-pointer" (click)="initLogin(true)">
+        <img [src]="isMobile ? banner.urlImagenMobile : banner.urlImagen" [alt]="banner.titulo"
+          class="w-full h-full object-cover" />
+      </div>
+
+      <!-- si tiene path, navegamos con routerLink + queryParams -->
+      <a *ngIf="banner.path" [routerLink]="banner.path" [queryParams]="banner.query"
+        class="block w-full h-full cursor-pointer">
+        <img [src]="isMobile ? banner.urlImagenMobile : banner.urlImagen" [alt]="banner.titulo"
+          class="w-full h-full object-cover" />
+      </a>
+    </div>
+  </div>
+
+  <!-- flechas -->
+  <button (click)="prevSlide()"
+    class="absolute left-4 top-1/2 transform -translate-y-1/2 bg-transparent !text-3xl lg:!text-6xl !h-12 !w-12 text-white border-none cursor-pointer p-2">
+    ❬
+  </button>
+  <button (click)="nextSlide()"
+    class="absolute right-4 top-1/2 transform -translate-y-1/2 bg-transparent !text-3xl lg:!text-6xl !h-12 !w-12 text-white border-none cursor-pointer p-2">
+    ❭
+  </button>
+
+  <!-- círculos de paginación -->
+  <div class="absolute bottom-4 transform -translate-x-1/2 flex space-x-2 w-full justify-center">
+    <span *ngFor="let banner of visibleBanners; let i = index" class="block w-3 h-3 rounded-full bg-gray-400 ml-1 mr-1"
+      [class.bg-yellow-500]="i === currentIndex" (click)="goToSlide(i)"></span>
+  </div>
+</section>

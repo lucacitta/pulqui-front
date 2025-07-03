@@ -1,0 +1,76 @@
+<div class="gallery">
+  <div class="gallery__multiple" *ngIf="(images ?? []).length > 0; else noImages">
+
+    <div class="gallery__multiple__miniatures">
+      <div class="gallery__multiple__miniatures__item" (click)="selectImage = 0">
+        <img [src]="image" class="gallery__multiple__miniatures__item__img" />
+      </div>
+      <div
+        class="gallery__multiple__miniatures__item"
+        *ngFor="let item of images; index as i"
+        (click)="selectImage = i + 1"
+      >
+        <img
+          [src]="item.url_imagen"
+          class="gallery__multiple__miniatures__item__img"
+        />
+      </div>
+    </div>
+
+    <div class="gallery__multiple__image" (swipe)="onSwipe($event)">
+      <div
+        [ngClass]="{
+          'gallery__multiple__image__img--active': selectImage === 0
+        }"
+        class="gallery__multiple__image__img"
+      >
+        <figure
+          class="gallery__multiple__image__img__figure zoom"
+          >
+          <img [src]="image" class="" />
+        </figure>
+      </div>
+      <div
+        *ngFor="let item of images; index as i"
+        [ngClass]="{
+          'gallery__multiple__image__img--active': selectImage === i + 1
+        }"
+        class="gallery__multiple__image__img"
+      >
+        <figure
+          class="gallery__multiple__image__img__figure zoom"
+          >
+          <img [src]="item.url_imagen" class="" />
+        </figure>
+      </div>
+    </div>
+
+    <div class="gallery__multiple__slider">
+      <div
+        class="gallery__multiple__slider__item"
+        [ngClass]="{
+          'gallery__multiple__slider__item--active': selectImage === 0
+        }"
+        (click)="selectImage = 0"
+      ></div>
+      <div
+        class="gallery__multiple__slider__item"
+        *ngFor="let item of images; index as i"
+        [ngClass]="{
+          'gallery__multiple__slider__item--active': selectImage === i + 1
+        }"
+        (click)="selectImage = i + 1"
+      ></div>
+    </div>
+  </div>
+
+  <ng-template #noImages>
+    <div class="gallery__single">
+      <figure
+        class="gallery__multiple__image__img__figure zoom"
+        [style.background-image]="'url(' + image + ')'">
+        <img [src]="image" class="gallery__single__img" />
+      </figure>
+    </div>
+  </ng-template>
+</div>

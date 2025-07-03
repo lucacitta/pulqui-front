@@ -1,0 +1,17 @@
+<div class="w-screen h-screen overflow-auto">
+  <div class="bg-[#f6f6f6] px-12 h-full pt-8">
+    @if(isLoading){
+    <div class="flex flex-col justify-center items-center" style="height: calc(100vh - 80px);">
+      <mat-spinner diameter="50"></mat-spinner>
+      <p class="mt-4 text-gray-500">Buscando productos...</p>
+    </div>
+    }@else if(arrayProducts && arrayProducts.length === 0){
+    <div class="text-center">
+      <mat-icon class="text-pulqui !text-7xl !h-20 !w-20">search_off</mat-icon>
+      <h4 class="">No se han encontrado resultados</h4>
+    </div>
+    }@else {
+    <app-grid-products [elements]="arrayProducts"></app-grid-products>
+    }
+  </div>
+</div>

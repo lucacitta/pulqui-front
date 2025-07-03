@@ -1,0 +1,204 @@
+<div class="resume">
+  <div *ngIf="loading" class="flex justify-center">
+    <mat-spinner color="accent" mode="indeterminate" diameter="50"></mat-spinner>
+  </div>
+
+  <mat-card appearance="raised" class="w-full">
+    <mat-card-header>
+      <mat-card-title class="font-bold">Resumen de la compra</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="flex justify-between py-2">
+        <p class="font-semibold m-0">ID compra</p>
+        <p>{{ resumen_compra.cons_carro_compra }}</p>
+      </div>
+      <div class="flex justify-between">
+        <p class="font-semibold">Subtotal de productos</p>
+        <p>{{ resumen_compra.subtotal | currency : '$' }} {{ moneda_operacion }}</p>
+      </div>
+      <div class="flex justify-between py-2">
+        <p class="font-semibold">Valor envío</p>
+        <p>{{ resumen_compra.valor_envio | currency : '$' }} {{ moneda_operacion }}</p>
+      </div>
+      <div *ngIf="resumen_compra.descuento > 0" class="flex justify-between py-2">
+        <p class="font-semibold">Código descuento ({{resumen_compra.descuento_porcentaje}} %)</p>
+        <p>{{ -resumen_compra.descuento | currency : '$' }} {{ moneda_operacion }}</p>
+      </div>
+      <div class="flex justify-between py-2">
+        <p class="font-semibold">Impuestos</p>
+        <p>{{ resumen_compra.impuesto | currency : '$' }} {{ moneda_operacion }}</p>
+      </div>
+      <div class="flex justify-between py-2 font-bold">
+        <p>Total</p>
+        <p>{{ resumen_compra.total | currency : '$' }} {{ moneda_operacion }}</p>
+      </div>
+      <div *ngIf="resumen_compra.descuento==0 && estado_compra === 0" class="py-2">
+        <div class="font-semibold mb-3">Código de descuento</div>
+        <div class="flex items-center cursor-pointer" (click)="openDialogWithTemplateRef(secondDialog)">
+          <mat-icon>confirmation_number</mat-icon>
+          <span class="ml-2">Ingresa tu código de descuento</span>
+          <mat-icon class="ml-auto">chevron_right</mat-icon>
+        </div>
+      </div>
+      <div *ngIf="resumen_compra.descuento>0 && estado_compra === 0" class="py-2">
+        <div class="flex items-center cursor-pointer" (click)="deleteCode()">
+          <span class="font-semibold">Eliminar Código de descuento</span>
+          <mat-icon class="ml-auto">delete</mat-icon>
+        </div>
+      </div>
+      <div class="py-2">
+        <div *ngIf="mostrarButon && false" class="flex items-center">
+          <mat-checkbox [(ngModel)]="terminosYCondicones" (click)="showTerms()">
+            Aceptar
+            <span class="ml-1 underline">terminos y condiciones</span>
+          </mat-checkbox>
+        </div>
+        <button
+          *ngIf="mostrarButon"
+          mat-flat-button
+          color="accent"
+          class="w-full mt-2"
+          (click)="validateDocuments('pago_electronico')"
+        >
+          Pago electrónico
+        </button>
+        <button
+          *ngIf="mostrarButon"
+          mat-flat-button
+          color="accent"
+          class="w-full mt-2"
+          appValidation="v_other_payments"
+          (click)="validateDocuments('pago_transferencia')"
+        >
+          Otros medios de pago
+        </button>
+        <button
+          *ngIf="mostrarButonUno && estado_compra === 0 && estado === 1"
+          mat-flat-button
+          color="accent"
+          class="w-full mt-2"
+          [disabled]="productos.length <= 0"
+          (click)="comprar()"
+        >
+          Comprar
+        </button>
+        <button
+          *ngIf="estado_compra === 0 && estado === 1"
+          mat-flat-button
+          color="accent"
+          class="w-full mt-2"
+          [disabled]="productos.length <= 0"
+          (click)="getCotizacion()"
+        >
+          Descargar cotización
+        </button>
+
+        <div *ngIf="estado_compra === 2" class="py-2">
+          <ng-container>
+            <div class="text-center">
+              <button mat-flat-button (click)="getPaymentMethods(false)" class="w-full mt-2">Medios de pago</button>
+            </div>
+            <div *ngIf="!archivos || !archivos[0]" class="text-center mt-2">
+              <button mat-stroked-button color="accent" class="w-full mt-2" (click)="fileInput.click()">
+                <mat-icon>attach_file</mat-icon>
+                Subir soporte
+                <input
+                  #fileInput
+                  hidden
+                  type="file"
+                  (change)="cargarArchivos($event)"
+                  accept="image/x-png, image/jpeg, application/pdf"
+                />
+              </button>
+              <p class="pt-2 text-gray-400 text-xs">
+                Recuerde que el peso máximo del archivo es de 5 MB.
+              </p>
+            </div>
+            <div class="text-center mt-2">
+              <button mat-flat-button color="warn" (click)="cancelBuy()" class="w-full mt-2">
+                Cancelar otros medios de pago
+              </button>
+            </div>
+            <mat-form-field *ngIf="archivos && archivos[0]" class="w-full mt-2">
+              <div>
+                <input type="text" matInput disabled [value]="archivos[0].name | slice : 0 : 35" />
+              </div>
+              <button *ngIf="archivos[0]" mat-icon-button matSuffix (click)="eliminarArchivo()">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </mat-form-field>
+            <div *ngIf="archivos && archivos[0]" class="text-center mt-2">
+              <button mat-raised-button (click)="sendSupport()" class="w-full mt-2">Enviar soporte</button>
+            </div>
+          </ng-container>
+        </div>
+
+        <div *ngIf="estado_compra === 3" class="py-2">
+          <ng-container>
+            <p>En proceso de verificación por parte de facturación.</p>
+            <a *ngIf="actual_support" [href]="actual_support" target="_blank" rel="noopener noreferrer">Actual factura cargada</a>
+            <div *ngIf="!archivos || !archivos[0]" class="text-center mt-2">
+              <button mat-raised-button class="w-full mt-2" (click)="fileInput.click()">
+                <mat-icon>attach_file</mat-icon>
+                Subir soporte
+                <input
+                  #fileInput
+                  hidden
+                  type="file"
+                  (change)="cargarArchivos($event)"
+                  accept="image/x-png, image/jpeg, application/pdf"
+                />
+              </button>
+            </div>
+            <mat-form-field *ngIf="archivos && archivos[0]" class="w-full mt-2">
+              <div>
+                <input type="text" matInput disabled [value]="archivos[0].name | slice : 0 : 35" />
+              </div>
+              <button *ngIf="archivos[0]" mat-icon-button matSuffix (click)="eliminarArchivo()">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </mat-form-field>
+            <div *ngIf="archivos && archivos[0]" class="text-center mt-2">
+              <button mat-raised-button (click)="updateSupport()" class="w-full mt-2">Actualizar soporte</button>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+    </mat-card-content>
+    <!-- <mat-card-actions>
+      <button mat-button>Learn More</button>
+    </mat-card-actions> -->
+  </mat-card>
+</div>
+
+<ng-template #secondDialog>
+  <div class="flex justify-between items-center p-4">
+    <h3 class="text-lg font-bold">Código de Descuento</h3>
+    <button mat-icon-button (click)="dialog.closeAll()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+  <mat-dialog-content class="p-4">
+    <div class="grid grid-cols-4 gap-4 font-bold">
+      <div>Nombre</div>
+      <div>Código</div>
+      <div>Porcentaje</div>
+      <div>Fecha de vencimiento</div>
+    </div>
+    <mat-selection-list class="mt-4" (selectionChange)="selectionChange($event)" #codigos [multiple]="false">
+      @if(codigos_descuento.length == 0){<div >No hay códigos para mostrar</div>}
+      <mat-list-option *ngFor="let code of codigos_descuento" [value]="code.id">
+        <div class="grid grid-cols-4 gap-4">
+          <div class="truncate">{{ code.nombre_codigo }}</div>
+          <div>{{ code.codigo }}</div>
+          <div>{{ code.porcentaje }}%</div>
+          <div>{{ code.fecha_fin_vigencia }}</div>
+        </div>
+      </mat-list-option>
+    </mat-selection-list>
+    <mat-progress-bar mode="indeterminate" color="accent" *ngIf="isLoading"></mat-progress-bar>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end" class="p-4">
+    <button mat-flat-button matDialogClose color="accent" (click)="verify()" [disabled]="!codigo_descuento">Aplicar</button>
+  </mat-dialog-actions>
+</ng-template>

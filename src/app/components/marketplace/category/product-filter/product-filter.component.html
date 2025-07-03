@@ -1,0 +1,105 @@
+<div id="divFilter" class="h-full overflow-auto">
+
+  <!-- Loading skeleton -->
+  <ng-container *ngIf="isLoadingFilter; else filtersContent">
+    <div class="px-6 space-y-6">
+      <div class="h-6 w-1/2 bg-gray-300 animate-pulse rounded"></div>
+      <div class="space-y-2">
+        <div class="h-5 w-1/3 bg-gray-300 animate-pulse rounded"></div>
+        <div class="grid grid-cols-2 gap-4">
+          <div class="h-8 bg-gray-300 animate-pulse rounded" *ngFor="let _ of [1,2,3,4]"></div>
+        </div>
+      </div>
+      <div class="space-y-2">
+        <div class="h-5 w-1/4 bg-gray-300 animate-pulse rounded"></div>
+        <div class="h-8 bg-gray-300 animate-pulse rounded"></div>
+      </div>
+      <div class="space-y-2">
+        <div class="h-5 w-1/5 bg-gray-300 animate-pulse rounded"></div>
+        <div class="flex gap-2">
+          <div class="h-8 w-8 bg-gray-300 animate-pulse rounded-full" *ngFor="let _ of [1,2,3,4,5]"></div>
+        </div>
+      </div>
+      <div class="space-y-2">
+        <div class="h-5 w-1/6 bg-gray-300 animate-pulse rounded"></div>
+        <div class="space-y-2">
+          <div class="h-6 bg-gray-300 animate-pulse rounded" *ngFor="let _ of [1,2,3]"></div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+
+  <!-- Contenido real -->
+  <ng-template #filtersContent>
+    <div class="flex items-center justify-between py-2 px-6">
+      <p class="text-gray-700 font-semibold" *ngIf="!isStore">{{ title }}</p>
+      <div class="flex items-center space-x-2">
+        <button mat-button color="primary" (click)="onClearAll()">
+          <mat-icon>delete_sweep</mat-icon> Limpiar filtros
+        </button>
+        <button *ngIf="over && !isStore" mat-icon-button (click)="emitClose()">
+          <mat-icon>close</mat-icon>
+        </button>
+      </div>
+    </div>
+    <div class="h-px bg-gray-300 mb-4"></div>
+
+    <div class="px-6">
+      <p class="font-bold mb-2">Características</p>
+      <mat-accordion>
+        <mat-expansion-panel *ngFor="let c of caracteristicas; index as i" (afterCollapse)="afterClosed(i)">
+          <mat-expansion-panel-header>
+            <mat-panel-description>
+              <strong>{{ c.name }}</strong>
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+          <section id="caracteristicas-seccion{{ i }}" class="px-4">
+            <ul class="list-none p-0">
+              <li *ngFor="let m of c.medidas">
+                <mat-checkbox [(ngModel)]="m.val" (ngModelChange)="changefilter('CF', c, m)">
+                  {{ m.name }}
+                </mat-checkbox>
+              </li>
+            </ul>
+          </section>
+        </mat-expansion-panel>
+      </mat-accordion>
+    </div>
+
+    <div class="h-px bg-gray-300 my-4"></div>
+
+    <div class="px-6">
+      <p class="font-bold mb-2">Precio</p>
+      <p class="text-sm mb-2">${{ minValue }} – ${{ maxValue }}</p>
+      <mat-slider [min]="options.floor" [max]="options.ceil"
+        (input)="minValue = $any($event.target).value; changefilter('precio')"
+        (change)="maxValue = $any($event.target).value; changefilter('precio')">
+        <input matSliderStartThumb [value]="minValue" />
+        <input matSliderEndThumb [value]="maxValue" />
+      </mat-slider>
+    </div>
+
+    <div class="h-px bg-gray-300 my-4"></div>
+
+    <div class="px-6">
+      <p class="font-bold mb-2">Color</p>
+      <div class="flex flex-wrap gap-2">
+        <button *ngFor="let c of colors" type="button"
+          class="w-8 h-8 rounded-full focus:outline-none transition-all duration-200 border-2"
+          [class.border-red-500]="c.val" [class.border-gray-200]="!c.val" [style.background-color]="c.color"
+          (click)="toggleColor(c)" matTooltip="{{ c.name }}"></button>
+      </div>
+    </div>
+
+    <div class="h-px bg-gray-300 my-4"></div>
+
+    <div class="px-6">
+      <p class="font-bold mb-2">Marca</p>
+      <div class="flex flex-col gap-2">
+        <mat-checkbox *ngFor="let m of marca" [(ngModel)]="m.val" (ngModelChange)="changefilter('MR', m)">
+          {{ m.name }}
+        </mat-checkbox>
+      </div>
+    </div>
+  </ng-template>
+</div>

@@ -1,0 +1,168 @@
+<!-- Spinner mientras cargan las direcciones -->
+<div *ngIf="loadingDirecciones" class="flex justify-center py-8">
+  <mat-spinner diameter="40" color="accent"></mat-spinner>
+</div>
+
+<!-- Domicilios guardados y toggle -->
+<div
+  *ngIf="!loadingDirecciones && addByDefault.length && !mostrarFormulario"
+  class="mt-6 px-4"
+>
+  <p class="font-bold text-xl mb-2">Seleccione domicilios guardados</p>
+  <mat-card>
+    <mat-card-content>
+      <mat-selection-list
+        [(ngModel)]="selectDireccionEnvio"
+        (ngModelChange)="checkDirecciones($event)"
+        [multiple]="false"
+      >
+        <mat-list-option
+          *ngFor="let item of addByDefault"
+          [value]="item.cons_direccion"
+        >
+          {{ item.direccion_envio }} – {{ item.provincia }} / {{ item.localidad }}
+        </mat-list-option>
+      </mat-selection-list>
+    </mat-card-content>
+  </mat-card>
+  <mat-checkbox
+    class="mt-2"
+    mat-flat-button
+    color="accent"
+    (change)="agregarOtroDomicilio($event.checked)"
+    [checked]="mostrarFormulario"
+  >
+    Agregar un Domicilio
+  </mat-checkbox>
+</div>
+
+<!-- Formulario nuevo domicilio -->
+<div
+  *ngIf="!loadingDirecciones && (addByDefault.length === 0 || mostrarFormulario)"
+  class="mt-6 px-4"
+>
+  <form [formGroup]="direccionEnvio" class="space-y-4">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div>
+        <label class="block mb-1">Dirección de envío *</label>
+        <mat-form-field appearance="outline" class="w-full">
+          <input
+            matInput
+            formControlName="direccion_envio"
+            maxlength="100"
+            placeholder="Escriba aquí la dirección"
+            required
+          />
+        </mat-form-field>
+      </div>
+      <div>
+        <label class="block mb-1">Datos adicionales (opcional)</label>
+        <mat-form-field appearance="outline" class="w-full">
+          <input
+            matInput
+            formControlName="direccion_complementario"
+            maxlength="500"
+            placeholder="Ej: Depto, torre..."
+          />
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div>
+        <label class="block mb-1">Provincia *</label>
+        <mat-form-field appearance="outline" class="w-full">
+          <mat-select
+            formControlName="cons_provincia"
+            (selectionChange)="obtenerLocalidades($event.value)"
+            required
+          >
+            <mat-option
+              *ngFor="let p of provincias"
+              [value]="p.cons_provincia"
+            >
+              {{ p.provincia }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div>
+        <label class="block mb-1">Localidad *</label>
+        <mat-form-field appearance="outline" class="w-full">
+          <mat-select formControlName="cons_localidad" required>
+            <mat-option
+              *ngFor="let loc of localidades"
+              [value]="loc.cons_localidad"
+            >
+              {{ loc.localidad }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div>
+        <label class="block mb-1">Teléfono fijo *</label>
+        <mat-form-field appearance="outline" class="w-full">
+          <input
+            matInput
+            formControlName="telefono_fijo"
+            maxlength="15"
+            pattern="[0-9]*"
+            placeholder="Sólo números"
+            required
+          />
+          <mat-hint align="end">
+            {{ direccionEnvio.get('telefono_fijo')?.value?.length || 0 }} / 15
+          </mat-hint>
+        </mat-form-field>
+      </div>
+      <div>
+        <label class="block mb-1">Teléfono móvil *</label>
+        <mat-form-field appearance="outline" class="w-full">
+          <input
+            matInput
+            formControlName="telefono_movil"
+            maxlength="15"
+            pattern="[0-9]*"
+            placeholder="Sólo números"
+            required
+          />
+          <mat-hint align="end">
+            {{ direccionEnvio.get('telefono_movil')?.value?.length || 0 }} / 15
+          </mat-hint>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div>
+      <label class="block mb-1">Código Postal *</label>
+      <mat-form-field appearance="outline" class="w-full md:w-1/2">
+        <input
+          matInput
+          formControlName="codigo_postal"
+          maxlength="15"
+          pattern="[0-9]*"
+          placeholder="Sólo números"
+          required
+        />
+        <mat-hint align="end">
+          {{ direccionEnvio.get('codigo_postal')?.value?.length || 0 }} / 15
+        </mat-hint>
+      </mat-form-field>
+    </div>
+  </form>
+</div>
+
+<!-- Botón Siguiente -->
+<div *ngIf="!loadingDirecciones" class="text-right mt-4 py-4 px-4">
+  <button
+    mat-flat-button
+    color="accent"
+    [disabled]="!selectDireccionEnvio && !direccionEnvio.valid"
+    (click)="guardarEnvio()"
+  >
+    Siguiente
+  </button>
+</div>

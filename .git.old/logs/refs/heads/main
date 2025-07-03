@@ -1,0 +1,13 @@
+0000000000000000000000000000000000000000 840fa8a71bb1ea44448ecf38fa4b363d68bce826 Lucas Pereyra <lucaspereyra.dev@gmail.com> 1747082086 -0300	branch: Created from refs/remotes/origin/prod
+840fa8a71bb1ea44448ecf38fa4b363d68bce826 fc8d4d74c87d21aceddfab8bbc81f8163c2816ec Lucas Pereyra <lucaspereyra.dev@gmail.com> 1747082281 -0300	commit: [ HOTFIX ] footer maps
+fc8d4d74c87d21aceddfab8bbc81f8163c2816ec c78a233b7c561f308e6a9219cd96de11d209ecf4 Lucas Pereyra <lucaspereyra.dev@gmail.com> 1748457506 -0300	merge develop: Fast-forward
+c78a233b7c561f308e6a9219cd96de11d209ecf4 6258f30fe17ed907df8ab5e6d4c75b76a2aa4af7 Lucas Pereyra <lucaspereyra.dev@gmail.com> 1748457523 -0300	commit: [ UPDATE ] package.json
+6258f30fe17ed907df8ab5e6d4c75b76a2aa4af7 6d9d5db5821e66232975e1c53a20895951f0435c Lucas Pereyra <lucaspereyra.dev@gmail.com> 1748457773 -0300	commit: [ UPDATE ] banners
+6d9d5db5821e66232975e1c53a20895951f0435c e02b25f01a87ae8d70c9770f1e77bd89ab6e1c84 Lucas Pereyra <lucaspereyra.dev@gmail.com> 1748458117 -0300	commit: [ UPDATE ] banner
+e02b25f01a87ae8d70c9770f1e77bd89ab6e1c84 8144e60f5278b57a4d2ec5e7fa17ddfcbd2fffa0 Lucas Pereyra <lucaspereyra.dev@gmail.com> 1749232972 -0300	commit (merge): Merge branch 'develop' into prod
+8144e60f5278b57a4d2ec5e7fa17ddfcbd2fffa0 e02b25f01a87ae8d70c9770f1e77bd89ab6e1c84 Lucas Pereyra <lucaspereyra.dev@gmail.com> 1749232982 -0300	reset: moving to HEAD~
+e02b25f01a87ae8d70c9770f1e77bd89ab6e1c84 c7d124985439a5ba25586923532aa8163e4f1493 Lucas Pereyra <lucaspereyra.dev@gmail.com> 1749233010 -0300	commit: Merge branch 'develop' into prod
+c7d124985439a5ba25586923532aa8163e4f1493 25b23bf397806d3a3c5263bb37bf6e284a9fb2bc Lucas Pereyra <lucaspereyra.dev@gmail.com> 1749751917 -0300	commit: [ UPDATE ] banners
+25b23bf397806d3a3c5263bb37bf6e284a9fb2bc 970510e9e76311a126a939d41f9d595c531ee3f0 Lucas Pereyra <lucaspereyra.dev@gmail.com> 1751537961 -0300	merge develop: Fast-forward
+970510e9e76311a126a939d41f9d595c531ee3f0 86332b42a0b139dfb2c9eb395bb73b2cb575b5be Lucas Pereyra <lucaspereyra.dev@gmail.com> 1751537996 -0300	commit: [ UPDATE ] package
+86332b42a0b139dfb2c9eb395bb73b2cb575b5be 86332b42a0b139dfb2c9eb395bb73b2cb575b5be Luca Citta <lucacitta@gmail.com> 1751579322 -0300	Branch: renamed refs/heads/prod to refs/heads/main

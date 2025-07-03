@@ -1,0 +1,65 @@
+<div class="p-4">
+  <h4 class="text-lg font-semibold mb-4">Califica este servicio</h4>
+  <ng-container *ngIf="(cal.calificacion ?? -1) >= 0">
+    <ngx-stars
+      [readonly]="false"
+      [size]="1"
+      [color]="'#000000'"
+      [maxStars]="configuracion.calificacionMaxima ?? 5"
+      [initialStars]="cal.calificacion ?? 0"
+      (ratingOutput)="onRating($event)"
+      class="rate"
+    >
+      <span class="text-red-500">Este campo es requerido</span>
+    </ngx-stars>
+  </ng-container>
+  <ng-container *ngIf="(cal.calificacion ?? -1) < 0">
+    <ngx-stars
+      [readonly]="false"
+      [size]="1"
+      [color]="'#000000'"
+      [maxStars]="configuracion.calificacionMaxima ?? 5"
+      [initialStars]="0"
+      (ratingOutput)="onRating($event)"
+      class="rate"
+    >
+      <span class="text-red-500">Este campo es requerido</span>
+    </ngx-stars>
+  </ng-container>
+
+  <div>
+    <!-- <p *ngIf="(cal.calificacion ?? 0) <= 0" class="text-red-500">Este campo es requerido</p> -->
+    <p *ngIf="flagMaxLength" class="text-red-500">Una de las palabras no tiene una longitud válida</p>
+  </div>
+
+  <div class="text-lg font-semibold mt-4">Por favor déjanos un comentario</div>
+
+  <div class="mt-2">
+    <mat-form-field appearance="outline" color="accent" class="w-full">
+      <input
+        [formControl]="comentario"
+        matInput
+        [value]="cal.comentario"
+        placeholder="Por favor deje un comentario"
+        class="w-full"
+      />
+    </mat-form-field>
+
+    <div *ngIf="cal.comentario; else nuevaCalificacion">
+      <div *ngIf="(cal.calificacion ?? 0) <= 0">
+        <button mat-raised-button disabled color="accent" (click)="editarCalificacion()">Actualizar</button>
+      </div>
+      <div *ngIf="(cal.calificacion ?? 0) > 0">
+        <button mat-raised-button color="accent" (click)="editarCalificacion()">Actualizar</button>
+      </div>
+    </div>
+    <ng-template #nuevaCalificacion>
+      <div *ngIf="(cal.calificacion ?? 0) <= 0">
+        <button mat-raised-button disabled color="accent" (click)="enviarCalificacion()">Enviar</button>
+      </div>
+      <div *ngIf="(cal.calificacion ?? 0) > 0">
+        <button mat-raised-button color="accent" (click)="enviarCalificacion()">Enviar</button>
+      </div>
+    </ng-template>
+  </div>
+</div>

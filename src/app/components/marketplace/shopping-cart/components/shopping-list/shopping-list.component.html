@@ -1,0 +1,145 @@
+<div class="list mt-5 font-sans">
+  <p class="flex flex-row justify-between text-lg font-semibold mb-5 mt-5" *ngIf="_items.length > 0">
+    <span>Productos en tu carro de compras</span>
+    <button mat-button color="accent" class="ali" (click)="dropCart()" *ngIf="estado_compra === 0">
+      <mat-icon>remove_shopping_cart</mat-icon>
+      Vaciar Carrito
+    </button>
+  </p>
+  <mat-divider></mat-divider>
+  <div class="flex flex-col space-y-4" *ngFor="let item of _items">
+    <div class="ProductCartContainer flex items-center space-x-4">
+      <div class="w-60 flex justify-center items-center">
+        <img
+          class="w-24 h-24 object-cover cursor-pointer"
+          (click)="abrirProducto(item)"
+          [src]="item.enlace_imagen || 'assets/images/not-image.jpg'"
+        />
+      </div>
+      <div class="flex-1">
+        <div class="font-semibold cursor-pointer" (click)="abrirProducto(item)">
+          {{ item.nombre_producto }} - {{ item.color }} - {{ item.talla }}
+        </div>
+        <div class="text-sm text-gray-500">{{ item.des_categoria_producto }}</div>
+        <!-- <div *ngIf="item.new_total_con_recargo !== item.new_total_bruto">
+          <span class="font-bold">Precio unitario:</span>
+          <p class="line-through text-gray-500">
+            {{ item.new_total_con_recargo | currency : moneda_operacion : 'symbol-narrow' }} {{ moneda_operacion }}
+          </p>
+          <p class="inline">
+            {{ item.new_total_bruto | currency : moneda_operacion : 'symbol-narrow' }} {{ moneda_operacion }}
+          </p>
+        </div> -->
+
+        <div>
+          Precio unitario:
+          <span class="font-semibold">
+            {{ item.new_total_con_recargo | currency : moneda_operacion : 'symbol-narrow' }} {{ moneda_operacion }}
+          </span>
+        </div>
+
+        <div *ngIf="item.new_valor_descuento_preferencial > 0">
+          <span class="font-semibold">Descuento rol preferencial {{ item.new_porcentaje_rol }}%:</span>
+          <span>
+            -{{ item.new_valor_descuento_preferencial | currency : moneda_operacion : 'symbol-narrow' }}
+            {{ moneda_operacion }}
+          </span>
+        </div>
+        <div *ngIf="item.new_valor_descuento_volumen > 0">
+          <span class="font-semibold">Descuento volumen {{ item.new_procentaje_volumen }}%:</span>
+          <span>
+            -{{ item.new_valor_descuento_volumen | currency : moneda_operacion : 'symbol-narrow' }}
+            {{ moneda_operacion }}
+          </span>
+        </div>
+        <div *ngIf="item.new_valor_descuento_promo > 0">
+          <span class="font-semibold">Descuento promocional {{ item.new_promo }}%:</span>
+          <span>
+            -{{ item.new_valor_descuento_promo | currency : moneda_operacion : 'symbol-narrow' }}
+            {{ moneda_operacion }}
+          </span>
+        </div>
+        <div *ngIf="item.new_valor_descuentos > 0">
+          <span class="font-semibold">Precio con descuento:</span>
+          <span>
+            {{ item.new_valor_unitario_menos_descuentos | currency : moneda_operacion : 'symbol-narrow' }}
+            {{ moneda_operacion }}
+          </span>
+        </div>
+        <div *ngIf="item.new_iva_unitario > 0">
+          <span class="font-semibold">Iva unitario {{ item.new_iva }}%:</span>
+          <span>
+            {{ item.new_iva_unitario | currency : moneda_operacion : 'symbol-narrow' }}
+            {{ moneda_operacion }}
+          </span>
+        </div>
+        <div class="text-xl font-semibold" *ngIf="item.new_total_valor_unitario > 0">
+          <span>Total valor unitario:</span>
+          <span>
+            {{ item.new_total_valor_unitario | currency : moneda_operacion : 'symbol-narrow' }}
+            {{ moneda_operacion }}
+          </span>
+        </div>
+        <div class="text-sm">
+          Cantidad:
+          <span class="font-semibold">{{ item.cantidad }}</span>
+        </div>
+
+        <div *ngIf="item.new_subtotal_descuentos">
+          <span class="font-semibold">Subtotal sin descuentos:</span>
+          <span>
+            {{ item.new_subtotal_cantidad | currency : moneda_operacion : 'symbol-narrow' }}
+            {{ moneda_operacion }}
+          </span>
+        </div>
+        <div *ngIf="item.new_subtotal_descuentos">
+          <span class="font-semibold">Total descuentos 
+            (@if(item.new_porcentaje_rol>0){ {{ item.new_porcentaje_rol }}% } 
+            @if(item.new_porcentaje_rol>0 && (item.new_procentaje_volumen>0 || item.new_promo>0)){ + } 
+            @if(item.new_procentaje_volumen>0){  {{ item.new_procentaje_volumen }}% } 
+            @if(item.new_procentaje_volumen>0 && item.new_promo>0){ + } 
+            @if(item.new_promo>0){ {{ item.new_promo??0 }}% }):
+          </span>
+          <span>
+            -{{ item.new_subtotal_descuentos | currency : moneda_operacion : 'symbol-narrow' }}
+            {{ moneda_operacion }}
+          </span>
+        </div>
+        <div *ngIf="item.new_subtotal_descuentos">
+          <span class="font-semibold">Subtotal con descuentos:</span>
+          <span>
+            {{ item.new_subtotal_con_descuento | currency : moneda_operacion : 'symbol-narrow' }}
+            {{ moneda_operacion }}
+          </span>
+        </div>
+        <div *ngIf="item.new_subtotal_iva">
+          <span class="font-semibold">Iva total:</span>
+          <span>
+            {{ item.new_subtotal_iva | currency : moneda_operacion : 'symbol-narrow' }}
+            {{ moneda_operacion }}
+          </span>
+        </div>
+        <div class="text-xl font-semibold">
+          <span>Total final:</span>
+          <span>
+            {{ item.new_total | currency : moneda_operacion : 'symbol-narrow' }}
+            {{ moneda_operacion }}
+          </span>
+        </div>
+
+      </div>
+      <div class="flex flex-col space-y-2">
+        <button mat-button color="accent" (click)="eliminarProductoCarro(item)" *ngIf="estado_compra === 0">
+          <mat-icon>delete</mat-icon>
+          Eliminar
+        </button>
+      </div>
+    </div>
+    <mat-divider></mat-divider>
+    <div *ngIf="item.discount" class="mt-2">
+      <mat-checkbox (change)="addDiscount($event, item, item.discount)">
+        ¿Desea activar el código de descuento de este producto que es {{ item.discount }}%?
+      </mat-checkbox>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,30 @@
+<!-- <mat-spinner class="flex justify-center items-center text-center" color="accent"
+*ngIf="!isFavoritesReady"></mat-spinner> -->
+
+
+
+<div *ngIf="_categoryService.isFavoritesReady$()" class="grid [grid-template-columns:repeat(auto-fill,minmax(300px,1fr))] gap-5">
+
+  <!-- <app-product-card
+      *ngFor="let pro of elements"
+      [name]="pro.nombre_producto"
+      [image]="pro.enlace_imagen"
+      [categories]="pro.des_categoria_producto"
+      [link]="'/../marketplace/home/producto/'+ pro.cons_producto"
+      >
+    </app-product-card> -->
+
+    <app-card-producto class="bg-white" *ngFor="let item of elements" [item]="item"
+      [favorites]="favorites()"></app-card-producto>
+  <!--
+    <app-product-card *ngFor="let item of elements"
+    [name]="item.nombre_producto"
+    [image]="item.enlace_imagen"
+    [price]="item.valor"
+    [starts]="item.calificacion"
+    [categories]="item"
+    [link]="item"
+    >
+
+    </app-product-card> -->
+</div>

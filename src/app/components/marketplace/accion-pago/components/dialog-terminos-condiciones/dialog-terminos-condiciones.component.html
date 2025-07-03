@@ -1,0 +1,43 @@
+<h2 mat-dialog-title>Términos y condiciones</h2>
+<mat-dialog-content>
+  <!--<h3>DEVELOP ACROSS ALL PLATFORMS</h3>-->
+  <p>
+    Davinci Technologies S.A.S. es distribuidor autorizado para Colombia de los productos que se ofrecen en este MarketPlace, los
+    productos y/o servicios adquiridos acá serán prestados directamente por los desarrolladores y/o dueños de los mismos. El
+    cliente admite al acceder al presente sitio Web y al dar su señal inequívoca de aceptación en la transacción que realiza, que
+    conoce y acepta los términos y condiciones de los proveedores directos de los productos que Davinci Technologies S.A.S.
+    ofrece. Dichos términos y condiciones podrán ser consultados en cualquier momento por el cliente en los siguientes enlaces:
+  </p>
+
+  <section *ngIf="terminos" class="example-section" style="display: flex; flex-direction: column">
+    <mat-checkbox *ngFor="let tyc of terminos; let i = index" class="example-margin" [(ngModel)]="terminos[i].checked">
+      <a [href]="tyc.link" target="_blank">{{ tyc.name }}</a>
+    </mat-checkbox>
+  </section>
+
+  <p>
+    El cliente conoce y acepta que Davinci Technologies S.A.S. y/o los proveedores de los productos y/o servicios acá ofrecidos
+    pueden revisar dichos términos en cualquier momento sin previo aviso. Al utilizar este sitio web, el cliente acepta estar
+    vinculado a su versión más actualizada.
+  </p>
+
+  <p>
+    De igual forma, el cliente acepta quedar vinculado por dichos términos de servicio, así como por todas las leyes y
+    regulaciones aplicables en la materia, admitiendo ser el responsable directo del cumplimiento de las normas locales que le
+    correspondan. En el evento de no estar de acuerdo con alguno de los términos y condiciones mencionados deberá cesar de
+    inmediato con la celebración de la transacción que adelanta.
+  </p>
+
+  <p>
+    Todos los componentes que conforman este sitio web, así como los productos y/o servicios que se comercializan en él pertenecen
+    a Davinci Technologies S.A.S. y/o a sus proveedores y están protegidos por las leyes de propiedad intelectual y derechos de
+    autor. Cualquier tipo de reproducción total o parcial de su contenido está totalmente prohibida, a menos que se solicite una
+    autorización expresa, y por escrito a Davinci Technologies S.A.S."
+  </p>
+  <section class="example-section">
+    <mat-checkbox class="example-margin" [(ngModel)]="check">Aceptar términos y condiciones</mat-checkbox>
+  </section>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-raised-button class="primary-button" (click)="aceptarTyC()" [disabled]="checkGeneral()">Aceptar</button>
+</mat-dialog-actions>

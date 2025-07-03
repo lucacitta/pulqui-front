@@ -1,0 +1,108 @@
+<mat-drawer-container class="mt-4 min-h-screen bg-[#f6f6f6]">
+  <mat-drawer
+    #drawer
+    class="pt-5 px-0 h-full"
+    [mode]="getDrawerMode()"
+    autosize
+    [opened]="true"
+    [opened]="filter"
+  >
+    <app-product-filter
+      [open]="filter"
+      (update)="filter = $event"
+      [title]="name_subcat"
+      [isStore]="isStore"
+      [idStore]="id_store ?? 0"
+      [idCategory]="id_category ?? 0"
+      [idSubCategory]="id_subcat ?? 0"
+      [over]="isHandset"
+      (closedNav)="drawer.toggle()"
+      (clearAll)="resetFilters()"
+    ></app-product-filter>
+  </mat-drawer>
+
+  <div class="px-12 pb-12 h-full overflow-auto">
+    <!-- Toolbar -->
+    <div class="flex justify-center md:justify-end pt-4 space-x-4">
+      <button
+        mat-fab extended
+        class="!bg-white !shadow-none w-auto"
+        *ngIf="!drawer.opened"
+        (click)="drawer.toggle()"
+      >
+        <div class="flex items-center space-x-2 text-black md:px-4">
+          Mostrar filtros <mat-icon>filter_alt</mat-icon>
+        </div>
+      </button>
+      <button
+        mat-fab extended
+        class="!bg-white !shadow-none"
+        *ngIf="drawer.opened"
+        (click)="drawer.toggle()"
+      >
+        <div class="flex items-center space-x-2 text-black md:px-4">
+          Ocultar filtros <mat-icon>filter_alt_off</mat-icon>
+        </div>
+      </button>
+      <mat-form-field appearance="outline" color="accent">
+        <mat-label>ORDENAR POR</mat-label>
+        <mat-select (selectionChange)="orderList($event.value)">
+          <mat-option *ngFor="let f of filterList" [value]="f.val">
+            {{ f.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <!-- Mobile subcategories -->
+    <div class="block lg:hidden mb-8">
+      <ng-container *ngIf="isLoading; else mobileSubCats">
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-4 mt-6">
+          <div class="animate-pulse bg-gray-300 h-12 rounded-lg" *ngFor="let _ of [1,2,3]"></div>
+        </div>
+      </ng-container>
+    </div>
+    <ng-template #mobileSubCats>
+      <div class="grid grid-cols-2 md:grid-cols-3 gap-4 mt-6">
+        <button
+          (click)="getAllItems(null)"
+          [class.border-2]="id_subcat === null"
+          class="bg-[#ffb300] text-white rounded-lg py-2 px-4"
+        >
+          Todo
+        </button>
+        <button
+          *ngFor="let sc of subCategories"
+          (click)="getAllItems(sc.cons_subcategoria_producto)"
+          [class.border-2]="sc.cons_subcategoria_producto === id_subcat"
+          class="bg-[#f6f6f6] text-[#ffb300] rounded-lg py-2 px-4"
+        >
+          {{ sc.des_subcategoria_producto }}
+        </button>
+      </div>
+    </ng-template>
+
+    <!-- Products area with reserved height -->
+    <div class="products-wrapper mt-8">
+      <!-- Skeletons -->
+      <div *ngIf="isLoading" class="grid grid-cols-1 xl:grid-cols-3 2xl:grid-cols-4 gap-6">
+        <div class="animate-pulse bg-gray-300 h-[490px] rounded-lg" *ngFor="let _ of [1,2,3,4,5,6,7,8]"></div>
+      </div>
+
+      <!-- Cuando ya no carga -->
+      <div *ngIf="!isLoading">
+        <!-- Si hay productos -->
+        <ng-container *ngIf="products().length > 0; else noProducts">
+          <app-grid-products [elements]="products()"></app-grid-products>
+        </ng-container>
+
+        <!-- Mensaje cuando no hay ninguno -->
+        <ng-template #noProducts>
+          <div class="text-center text-gray-600 py-20">
+            No hay productos disponibles, intente cambiar los filtros.
+          </div>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+</mat-drawer-container>

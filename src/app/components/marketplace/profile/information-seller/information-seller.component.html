@@ -1,0 +1,194 @@
+<div class="md:mx-20 py-4 w-auto bg-white border rounded-md" *ngIf="company">
+  <mat-card class="w-auto p-8 mt-0 m-8">
+    <mat-card-header class="flex flex-col items-center">
+      <ng-container *ngIf="company?.url_logo; else companyIcon">
+        <div class="relative inline-block">
+          <img class="w-20 h-20 rounded-full" [src]="company.url_logo" />
+          <label class="absolute top-0 right-0 cursor-pointer">
+            <input (change)="onFileSelected($event)" accept="image/jpg,image/jpeg,image/png" type="file" class="hidden" />
+            <mat-icon class="w-10 h-10 text-[#ffb300] rounded-full p-2">camera_alt</mat-icon>
+          </label>
+        </div>
+      </ng-container>
+
+      <ng-template #companyIcon>
+        <label class="cursor-pointer">
+          <input (change)="onFileSelected($event)" accept="image/jpg,image/jpeg,image/png" type="file" class="hidden" />
+          <mat-icon class="w-20 h-20 border-solid border-2 p-2 border-[#ffb300] text-[#ffb300] rounded-full">
+            camera_enhance
+          </mat-icon>
+        </label>
+      </ng-template>
+    </mat-card-header>
+
+    <mat-card-content>
+      <div class="text-gray-700 leading-tight text-center mt-8">{{ company.nombre_empresa }}</div>
+      <div class="text-gray-400 leading-tight text-center mt-1">{{ company.correo }}</div>
+    </mat-card-content>
+  </mat-card>
+
+  <div class="m-8">
+    <h3 class="text-[#333E4A]">Empresa</h3>
+    <mat-card class="w-auto p-8 my-0">
+      <form [formGroup]="formInformationCompany" class="flex flex-col space-y-4">
+        <mat-form-field appearance="outline" color="accent" class="w-full">
+          <mat-label>Nit</mat-label>
+          <input formControlName="nit" matInput placeholder="Nit*" />
+          <mat-error *ngIf="formInformationCompany.get('nit')?.hasError('required')">
+            El Nit es un valor
+            <strong>requerido</strong>
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" color="accent" class="w-full">
+          <mat-label>Nombres</mat-label>
+          <input formControlName="nombres" matInput placeholder="Nombre Empresa*" />
+          <mat-error *ngIf="formInformationCompany.get('nombres')?.hasError('required')">
+            Los nombres son un valor
+            <strong>requerido</strong>
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" color="accent" class="w-full">
+          <mat-label>Domicilio</mat-label>
+          <input formControlName="domicilio" matInput placeholder="Domicilio*" />
+          <mat-error *ngIf="formInformationCompany.get('domicilio')?.hasError('required')">
+            El domicilio es un valor
+            <strong>requerido</strong>
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" color="accent" class="w-full">
+          <mat-label>Telefono</mat-label>
+          <input formControlName="telefono" matInput placeholder="Teléfono*" />
+          <mat-error *ngIf="formInformationCompany.get('telefono')?.hasError('required')">
+            El Teléfono es un valor
+            <strong>requerido</strong>
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" color="accent" class="w-full">
+          <mat-label>Representante</mat-label>
+          <input formControlName="representante" matInput placeholder="Representante*" />
+          <mat-error *ngIf="formInformationCompany.get('representante')?.hasError('required')">
+            El Representante es un valor
+            <strong>requerido</strong>
+          </mat-error>
+        </mat-form-field>
+
+        <div class="flex flex-col items-center mt-8">
+          <span class="text-xl mb-4">Cuentas Bancarias</span>
+          <button mat-fab extended color="accent" (click)="addFicha()" class="w-full">
+            <div class="flex items-center space-x-2 text-black md:px-4">
+              Agregar Cuenta
+              <mat-icon>add</mat-icon>
+            </div>
+          </button>
+        </div>
+
+        <div class="flex flex-col mt-8" formArrayName="cuentas">
+          <mat-accordion>
+            <div *ngFor="let item of getCuentas.controls; let i = index" [formGroupName]="i">
+              <mat-expansion-panel [expanded]="item.get('active')?.value" class="!border-none !shadow-none">
+                <mat-expansion-panel-header>
+                  <mat-panel-title>
+                    <div class="relative w-full flex items-center justify-center">
+                      Cuenta #{{ i + 1 }} - {{ item.get('alias')?.value }}
+                    </div>
+                    <button
+                      mat-icon-button
+                      color="accent"
+                      title="Eliminar cuenta"
+                      class="absolute right-0 mr-2"
+                      (click)="deleteFicha(i)"
+                      *ngIf="i > 0 || getCuentas.controls.length > 1"
+                    >
+                      <mat-icon>delete_forever</mat-icon>
+                    </button>
+                  </mat-panel-title>
+                </mat-expansion-panel-header>
+                <div  class="flex flex-col space-y-4">
+                  <mat-form-field appearance="outline" color="accent" class="w-full">
+                    <mat-label>Nombre del titular de la cuenta</mat-label>
+                    <input matInput [formControlName]="'nombre'" maxlength="45" />
+                    <mat-error *ngIf="item.get('nombre')?.hasError('required')">
+                      El campo Nombre del titular de la cuenta es obligatorio
+                    </mat-error>
+                    <mat-hint align="end">{{ item.get('nombre')?.value.length }} / 45</mat-hint>
+                  </mat-form-field>
+
+                  <mat-form-field appearance="outline" color="accent" class="w-full">
+                    <mat-label>CBU o CVU</mat-label>
+                    <input matInput [formControlName]="'cbu'" maxlength="30" />
+                    <mat-error *ngIf="item.get('cbu')?.hasError('required')">El campo CBU o CVU es obligatorio</mat-error>
+                    <mat-hint align="end">{{ item.get('cbu')?.value.length }} / 30</mat-hint>
+                  </mat-form-field>
+
+                  <mat-form-field appearance="outline" color="accent" class="w-full">
+                    <mat-label>Alias</mat-label>
+                    <input matInput [formControlName]="'alias'" maxlength="45" />
+                    <mat-error *ngIf="item.get('alias')?.hasError('required')">El campo Alias es obligatorio</mat-error>
+                    <mat-hint align="end">{{ item.get('alias')?.value.length }} / 45</mat-hint>
+                  </mat-form-field>
+
+                  <mat-form-field appearance="outline" color="accent" class="w-full">
+                    <mat-label>CUIT/CUIL</mat-label>
+                    <input matInput [formControlName]="'cuit'" maxlength="20" />
+                    <mat-error *ngIf="item.get('cuit')?.hasError('required')">El campo CUIT/CUIL es obligatorio</mat-error>
+                    <mat-hint align="end">{{ item.get('cuit')?.value.length }} / 20</mat-hint>
+                  </mat-form-field>
+
+                  <mat-form-field appearance="outline" color="accent" class="w-full">
+                    <mat-label>Dirección de envío del correo de pago</mat-label>
+                    <input matInput [formControlName]="'direccion'" maxlength="100" />
+                    <mat-error *ngIf="item.get('direccion')?.hasError('required')">
+                      El campo Dirección de envío del correo de pago es obligatorio
+                    </mat-error>
+                    <mat-hint align="end">{{ item.get('direccion')?.value.length }} / 100</mat-hint>
+                  </mat-form-field>
+
+                  <mat-form-field appearance="outline" color="accent" class="w-full">
+                    <mat-label>Observaciones</mat-label>
+                    <input matInput [formControlName]="'observaciones'" maxlength="300" />
+                    <mat-hint align="end">{{ item.get('observaciones')?.value.length }} / 300</mat-hint>
+                  </mat-form-field>
+                </div>
+              </mat-expansion-panel>
+            </div>
+          </mat-accordion>
+        </div>
+      </form>
+    </mat-card>
+  </div>
+
+  <div class="m-8">
+    <h3 class="text-[#333E4A]">Token mercado pago</h3>
+    <mat-card class="w-auto p-8 my-0">
+      <form>
+        <mat-form-field appearance="outline" color="accent" class="w-full">
+          <mat-label>Token*</mat-label>
+          <input [(ngModel)]="token" matInput placeholder="Token*" name="token" />
+        </mat-form-field>
+        <div class="flex justify-center space-x-2">
+          <button mat-mini-fab color="primary" (click)="saveToken()" [disabled]="!token">
+            <mat-icon>save</mat-icon>
+          </button>
+          <button mat-mini-fab color="primary" (click)="deleteToken()" [disabled]="!token">
+            <mat-icon>delete_forever</mat-icon>
+          </button>
+        </div>
+      </form>
+    </mat-card>
+  </div>
+
+  <div class="m-8 mb-0">
+    <button
+      mat-raised-button
+      color="primary"
+      [disabled]=" !(formInformationCompany.valid && formInformationCompany.dirty)"
+      (click)="updateBasicInfo()"
+    >
+      Guardar
+    </button>
+  </div>
+</div>

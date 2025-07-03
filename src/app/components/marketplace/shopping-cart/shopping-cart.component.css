@@ -1,0 +1,9 @@
+@media (max-width: 1200px) {
+  .ShoppingCart {
+    flex-direction: column;
+  }
+
+  .ShoppingCart__Item {
+    width: 100%;
+  }
+}

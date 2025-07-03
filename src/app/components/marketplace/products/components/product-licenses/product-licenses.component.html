@@ -1,0 +1,29 @@
+<div class="flex flex-col">
+  <h3 class="text-lg font-semibold mb-4">Modificación de licencia</h3>
+  <form [formGroup]="form" id="form" (ngSubmit)="save()" name="form" class="flex flex-col">
+    <div mat-dialog-content class="flex flex-col mb-4">
+      <mat-form-field class="w-full">
+        <input
+          matInput
+          [matDatepicker]="picker"
+          formControlName="fecha_vigencia"
+          placeholder="Fecha de activación"
+          [min]="fecha"
+          required
+        />
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+    </div>
+    <div mat-dialog-actions class="flex justify-end space-x-2">
+      <button mat-button type="button" (click)="cancel()" class="flex items-center">
+        <mat-icon>cancel</mat-icon>
+        Cancelar
+      </button>
+      <button mat-button type="submit" [disabled]="form.invalid" class="flex items-center">
+        <mat-icon>save</mat-icon>
+        Actualizar
+      </button>
+    </div>
+  </form>
+</div>

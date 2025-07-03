@@ -1,0 +1,38 @@
+<div class="bg-[#f6f6f6] pt-8" *ngIf="profile$() as profile">
+  <mat-card class="w-full max-w-sm p-8 mb-8 mx-auto">
+    <mat-card-header class="flex flex-col items-center">
+      <ng-container *ngIf="profile?.enlace_imagen; else userIcon">
+        <div class="relative inline-block">
+          <img class="w-20 h-20 rounded-full" [src]="profile.enlace_imagen" />
+          <label class="absolute top-0 right-0 cursor-pointer">
+            <input (change)="onFileSelected($event)" accept="image/jpg,image/jpeg,image/png" type="file" class="hidden" />
+            <mat-icon class="w-10 h-10 text-[#ffb300] rounded-full p-2">camera_alt</mat-icon>
+          </label>
+        </div>
+      </ng-container>
+
+      <ng-template #userIcon>
+        <label class="cursor-pointer">
+          <input (change)="onFileSelected($event)" accept="image/jpg,image/jpeg,image/png" type="file" class="hidden" />
+          <mat-icon class="w-20 h-20 border-solid border-2 p-2 border-[#ffb300] text-[#ffb300] rounded-full">
+            camera_enhance
+          </mat-icon>
+        </label>
+      </ng-template>
+    </mat-card-header>
+
+    <mat-card-content>
+      <div class="text-2xl font-semibold leading-tight text-center mt-4">{{ profile.nombres + ' ' + profile.apellidos }}</div>
+      <div class="text-gray-400 leading-tight text-center mt-1">{{ profile.correo }}</div>
+      <div class="text-gray-400 leading-tight text-center mt-1">{{ profile.rol }}</div>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-tab-group>
+    <mat-tab label="Información básica">
+      <app-information-profile [user]="profile" (updateUser)="onUserUpdated($event)"></app-information-profile>
+    </mat-tab>
+    <mat-tab label="Información Empresa"><app-information-seller [company]="company$()" (updateUserSeller)="onUserSellerUpdated($event)"></app-information-seller></mat-tab>
+    <mat-tab label="Domicilio"><app-residence [user]="profile"></app-residence></mat-tab>
+  </mat-tab-group>
+</div>

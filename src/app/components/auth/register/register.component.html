@@ -1,0 +1,279 @@
+<div class="main-wrapper relative">
+  <div class="absolute right-2 top-0">
+    <button (click)="toggleModal()" type="button" class="!bg-transparent !border-none p-2">
+      <mat-icon class="!text-3xl !w-8 !h-auto text-pulquigray">close</mat-icon>
+    </button>
+  </div>
+  <div [class]="logoTitleWrapperClasses">
+    @if(imgUrl){
+    <div [class]="logoWrapperClasses">
+      <!-- <img mat-card-image [class]="logoClasses" [src]="imgUrl" /> -->
+    </div>
+    }
+
+    <div>
+      <h2 class="m-0 !text-xl text-pulquigray">{{ title() }} </h2>
+      <!-- <h2 class="text-secondary m-0">{{ subTitle }}</h2> -->
+    </div>
+  </div>
+  
+    @if(verlogin){
+      <app-buttons-social (clickSocialEvent)="clickSocial($event,'login')"></app-buttons-social>
+      <form [formGroup]="LoginForm" (submit)="loginuserandpass()">
+        <mat-form-field class="pt-3" appearance="outline">
+          <mat-label>Correo electrónico</mat-label>
+          <input formControlName="correocampologin" name="correosigin" required matInput type="email" />
+        </mat-form-field>
+    
+        <mat-form-field appearance="outline">
+          <mat-label>Password</mat-label>
+          <input formControlName="contrasenacampologin" [type]="togglePassword" required matInput />
+          <button mat-icon-button matSuffix (click)="togglePasswordFunction()" type="button">
+            <mat-icon>{{ toggleEye ? 'visibility' : 'visibility_off' }}</mat-icon>
+          </button>
+        </mat-form-field>
+        <!-- botón iniciar sesión -->
+        <div class="action-form-wrapper">
+          <button [class]="submitButtonClasses" mat-flat-button>
+            Iniciar Sesión
+          </button>
+        </div>
+      </form>
+      <div class="flex items-center justify-between py-4">
+    
+        <a (click)="VerRecuperacionCorreo()" class="text-sm text-blue-700 underline cursor-pointer">Recuperar contraseña</a>
+    
+        <a (click)="activarTab(0)" class="text-sm font-medium text-teal-600 underline cursor-pointer">Registrarme</a>
+    
+      </div>
+    }
+
+    @if(verrecuperarcorreo){
+      <div  class="flex justify-start mb-5 ">
+        <button (click)="VerLogin()" class=""  mat-button>
+          <mat-icon>keyboard_arrow_left</mat-icon>
+          Regresar al inicio de sesión
+        </button>
+    </div>
+    }
+    @if(verrecuperarcorreo){
+      <div class="flex flex-col justify-center w-full">
+        <form  [formGroup]="LoginRecuperar" (submit)="recuperarcorreoenvio()">
+        <mat-form-field  appearance="outline" >
+            <mat-label>Escriba su correo electrónico</mat-label>
+            <input
+            formControlName="correocampologinrecuperar"
+            name="correosigin"
+            required
+            matInput
+            type="email"
+            />
+        </mat-form-field>
+    
+        <div class="w-full">
+            <button class="w-full"  mat-flat-button>
+            Enviar correo de recuperación
+            </button>
+        </div>
+        </form>
+
+      </div>
+    }
+
+    <!-- Registro -->
+    @if(verregistro){
+      <div class="flex flex-col">
+        @if(tabActive==0){
+          <div class=" flex flex-col items-center w-full">
+            <button class="mb-4" (click)="activarTab(1, 0)" mat-flat-button id="btn_register_user">
+              Registrarse como usuario
+            </button>
+      
+            <button class="mb-4" (click)="activarTab(2)" mat-raised-button id="btn_register_company">
+              Registrarse como Empresa
+            </button>
+      
+            <span class="text-sm font-medium text-blue-700">
+              ¿Ya tienes una cuenta?
+              <a (click)="VerLogin()" class="ml-2 text-sm font-medium text-teal-600 underline cursor-pointer">Inicia Sesión</a>
+            </span>
+          </div>
+        }
+        @if(tabActive==1||tabActive==2){
+          <div class="flex justify-start mb-5 ">
+            <button (click)="returnTab()" class="" mat-button>
+              <mat-icon>keyboard_arrow_left</mat-icon>
+              Regresar
+            </button>
+          </div>
+        }
+        @if(tabActive==1 && step==0){
+          <div>
+            @if(verregistro){
+              <form [formGroup]="registroBasicoForm" (submit)="continuarRegistro()">
+                <mat-form-field color="accent" appearance="outline" class="pb-1">
+                  <mat-label>Nombres</mat-label>
+                  <input (focusout)="onFocusOutEvent($event)" formControlName="nombres" name="" required matInput type="text" />
+                  @if(registroBasicoForm.controls.nombres.hasError('pattern')){<mat-error>Sólo se permiten letras y
+                    espacios.</mat-error>}
+                  @if(registroBasicoForm.controls.nombres.hasError('maxlength')){<mat-error>Longitud máxima de 45 caracteres
+                    superada</mat-error>}
+                </mat-form-field>
+                <mat-form-field color="accent" appearance="outline" class="pb-1">
+                  <mat-label>Apellidos</mat-label>
+                  <input (focusout)="onFocusOutEvent($event)" formControlName="apellidos" name="" required matInput
+                    type="text" />
+                  @if(registroBasicoForm.controls.apellidos.hasError('pattern')){<mat-error>Sólo se permiten letras y
+                    espacios.</mat-error>}
+                  @if(registroBasicoForm.controls.apellidos.hasError('maxlength')){<mat-error>Longitud máxima de 45 caracteres
+                    superada</mat-error>}
+                </mat-form-field>
+                <mat-form-field color="accent" appearance="outline" class="pb-1">
+                  <mat-label>Número de Documento</mat-label>
+                  <input (focusout)="onFocusOutEvent($event)" formControlName="identificacion" name="" required matInput
+                    type="text" />
+                  @if(registroBasicoForm.controls.identificacion.hasError('pattern')){<mat-error>Sólo se permiten
+                    números</mat-error>}
+                  @if(registroBasicoForm.controls.identificacion.hasError('maxlength')){<mat-error>Longitud máxima de 45
+                    caracteres superada</mat-error>}
+                </mat-form-field>
+                <mat-form-field color="accent" appearance="outline" class="pb-1">
+                  <mat-label>Teléfono</mat-label>
+                  <input (focusout)="onFocusOutEvent($event)" formControlName="telefono" name="" required matInput
+                    type="text" />
+                  @if(registroBasicoForm.controls.telefono.hasError('pattern')){<mat-error>Sólo se permiten números y el
+                    caracter "+".</mat-error>}
+                  @if(registroBasicoForm.controls.telefono.hasError('maxlength')){<mat-error>Longitud máxima de 45 caracteres
+                    superada</mat-error>}
+                </mat-form-field>
+        
+                <div [class]="submitWrapperClasses" class="btn_user_registered">
+                  <button [class]="submitButtonClasses" mat-raised-button>
+                    Continuar
+                  </button>
+                </div>
+              </form>
+            }
+          </div>
+        }
+        @if(tabActive==1 && step==1){
+          <div >
+            <app-buttons-social (clickSocialEvent)="clickSocial($event,'new')"></app-buttons-social>
+            @if(verregistro){
+              <form
+                [formGroup]="registroForm"
+                (submit)="registrar()"
+              >
+                <mat-form-field class="pt-3" color="accent" appearance="outline" >
+                  <mat-label>Correo electrónico</mat-label>
+                    <input
+                      (focusout)="onFocusOutEvent($event)"
+                      formControlName="correocampo"
+                      name=""
+                      required
+                      matInput
+                      type="email"
+                    />
+                    @if(registroForm.controls.correocampo.hasError('email')){
+                      <mat-error>
+                        correo no válido  <strong>ejemplo&#64;ejemplo.com</strong>
+                      </mat-error>
+                    }
+                </mat-form-field>
+                
+                <mat-form-field color="accent" appearance="outline">
+                  <mat-label>Password</mat-label>
+                  <input formControlName="contrasenacampo" [type]="togglePassword" required matInput />
+                  <div class="ico eye-ico" (click)="togglePasswordFunction()">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                      <path
+                        d="M15 12c0 1.657-1.343 3-3 3s-3-1.343-3-3c0-.199.02-.393.057-.581 1.474.541 2.927-.882 2.405-2.371.174-.03.354-.048.538-.048 1.657 0 3 1.344 3 3zm-2.985-7c-7.569 0-12.015 6.551-12.015 6.551s4.835 7.449 12.015 7.449c7.733 0 11.985-7.449 11.985-7.449s-4.291-6.551-11.985-6.551zm-.015 12c-2.761 0-5-2.238-5-5 0-2.761 2.239-5 5-5 2.762 0 5 2.239 5 5 0 2.762-2.238 5-5 5z" />
+                    </svg>
+                  </div>
+                </mat-form-field>
+                
+                <mat-form-field color="accent" appearance="outline">
+                  <mat-label>Confirmar Password</mat-label>
+                  <input formControlName="confirmarcontrasenacampo" [type]="togglePassword2" required matInput />
+                  <div class="ico eye-ico" (click)="togglePasswordFunction2()">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                      <path
+                        d="M15 12c0 1.657-1.343 3-3 3s-3-1.343-3-3c0-.199.02-.393.057-.581 1.474.541 2.927-.882 2.405-2.371.174-.03.354-.048.538-.048 1.657 0 3 1.344 3 3zm-2.985-7c-7.569 0-12.015 6.551-12.015 6.551s4.835 7.449 12.015 7.449c7.733 0 11.985-7.449 11.985-7.449s-4.291-6.551-11.985-6.551zm-.015 12c-2.761 0-5-2.238-5-5 0-2.761 2.239-5 5-5 2.762 0 5 2.239 5 5 0 2.762-2.238 5-5 5z" />
+                    </svg>
+                  </div>
+                </mat-form-field>
+                <div [class]="submitWrapperClasses" class="btn_user_registered">
+                  <button [class]="submitButtonClasses"  mat-raised-button>
+                    Registrarse
+                  </button>
+                </div>
+                        <!-- <re-captcha
+
+                          formControlName="confirmarcapchacampo"
+                          size="invisible"
+                          #captchaRef="reCaptcha"
+                          siteKey="{{ siteKeyRecaptcha }}"
+                          (resolved)="$event && submit($event)"
+                          required
+                        >
+                        </re-captcha> -->
+              </form>
+            }
+          </div>
+        }
+        @if(tabActive==2){
+          <div>
+            <form [formGroup]="registroEmpresaForm" (submit)="registrarEmpresa()">
+              <mat-form-field color="accent" appearance="outline">
+                <mat-label>Nombre empresa</mat-label>
+                <input formControlName="CampoNombreEmpresa" name="NombreEmpresa" required matInput />
+              </mat-form-field>
+      
+              <mat-form-field color="accent" appearance="outline">
+                <mat-label>Teléfono</mat-label>
+                <input formControlName="CampoTelefono" name="Telefono" required matInput />
+                @if(registroEmpresaForm.controls.CampoTelefono.hasError('pattern')){<mat-error>Sólo se permiten números y el
+                  caracter "+".</mat-error>}
+                @if(registroEmpresaForm.controls.CampoTelefono.hasError('maxlength')){<mat-error>Longitud máxima de 45 caracteres
+                  superada</mat-error>}
+              </mat-form-field>
+      
+              <mat-form-field color="accent" appearance="outline">
+                <mat-label>Cuit</mat-label>
+                <input (keyup)="removeScript($event)" formControlName="CampoCuit" name="Cuit" matInput type="text" />
+                @if(registroEmpresaForm.controls.CampoCuit.hasError('minLength') ||
+                registroEmpresaForm.controls.CampoCuit.hasError('maxLength') ||
+                registroEmpresaForm.controls.CampoCuit.hasError('required')){
+                <mat-error class="mb-3">
+                  campo obligatorio, <strong>debe tener 11 números no debe contener ‘-/_.*+’ o letras</strong>
+                </mat-error>
+                }
+              </mat-form-field>
+      
+              <mat-form-field color="accent" appearance="outline">
+                <mat-label>Nombre Contacto</mat-label>
+                <input formControlName="CampoNombreContacto" name="NombreContacto" required matInput />
+              </mat-form-field>
+      
+              <mat-form-field color="accent" appearance="outline">
+                <mat-label>Correo electrónico</mat-label>
+                <input formControlName="CampoCorreoElectronico" name="CorreoElectronico" required matInput type="email" />
+                @if(registroEmpresaForm.controls.CampoCorreoElectronico.hasError('email')){
+                <mat-error>
+                  correo no válido <strong>ejemplo&#64;ejemplo.com</strong>
+                </mat-error>
+                }
+              </mat-form-field>
+      
+              <div [class]="submitWrapperClasses " class="btn_company_registered">
+                <button [class]="submitButtonClasses" mat-raised-button>
+                  Registrar Empresa
+                </button>
+              </div>
+            </form>
+          </div>
+        }
+      </div>
+    } 
+  </div>
+  

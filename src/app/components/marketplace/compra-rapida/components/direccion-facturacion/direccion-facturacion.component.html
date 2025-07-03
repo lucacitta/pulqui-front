@@ -1,0 +1,121 @@
+<!-- Checkbox para copiar datos -->
+<div class="pt-4 px-4">
+  <mat-checkbox [(ngModel)]="opcionDireccionEnvio" (change)="chechkDireccionEnvio($event.checked)">
+    ¿Usar los mismos datos de envío?
+  </mat-checkbox>
+</div>
+
+<!-- Domicilios guardados -->
+<div *ngIf="direccionesFacturacion.length !== 0 && !mostrarFormulario && !opcionDireccionEnvio" class="pt-4">
+  <h3 class="mt-4 font-bold text-lg">Mis Domicilios</h3>
+  <mat-card>
+    <section *ngFor="let item of direccionesFacturacion" class="mb-4">
+      <mat-radio-button name="direccion" [value]="item.direccion"
+        (change)="checkDirecciones(item.cons_direccion_facturacion)"
+        [checked]="item.cons_direccion_facturacion === currentDireccion">
+        {{ item.direccion }} {{ item.provincia }}
+      </mat-radio-button>
+    </section>
+  </mat-card>
+</div>
+
+<!-- Checkbox para agregar nuevo -->
+<section *ngIf="direccionesFacturacion.length !== 0" class="pt-4">
+  <mat-checkbox [(ngModel)]="opcion" (change)="agregarOtroDomicilio($event.checked)">
+    Agregar un Domicilio
+  </mat-checkbox>
+</section>
+
+<!-- Formulario -->
+<div *ngIf="(direccionesFacturacion.length === 0 || (mostrarFormulario && opcion)) && !opcionDireccionEnvio"
+  class="pt-4 px-4">
+  <form ngNativeValidate [formGroup]="direccionFacturacion">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div>
+        <label class="block">Dirección de facturación *</label>
+        <mat-form-field appearance="outline" color="accent" class="w-full">
+          <input matInput maxlength="20" placeholder="Escriba aquí la dirección" formControlName="direccion_envio"
+            required />
+        </mat-form-field>
+      </div>
+      <div>
+        <label class="block">Datos de envío adicionales (opcional)</label>
+        <mat-form-field appearance="outline" color="accent" class="w-full">
+          <input matInput maxlength="20" placeholder="Escriba aquí la dirección complementaria"
+            formControlName="direccion_complementario" />
+        </mat-form-field>
+      </div>
+      <div>
+        <label class="block">Nombre *</label>
+        <mat-form-field appearance="outline" color="accent" class="w-full">
+          <input matInput maxlength="20" placeholder="Escriba nombre" formControlName="nombre" />
+          <mat-hint align="end">{{ direccionFacturacion.get('nombre')?.value?.length || 0}} / 20</mat-hint>
+        </mat-form-field>
+      </div>
+      <div>
+        <label class="block">Tipo de documento *</label>
+        <mat-form-field appearance="outline" color="accent" class="w-full">
+          <mat-select formControlName="tipoDocumento" required>
+            <mat-option *ngFor="let tipo_documento of tipo_documentos" [value]="tipo_documento.cons_codigo">
+              {{ tipo_documento.descripcion_1 }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div>
+        <label class="block">Número de Documento *</label>
+        <mat-form-field appearance="outline" color="accent" class="w-full">
+          <input matInput maxlength="12" placeholder="Escriba aquí número de documento"
+            formControlName="numeroDocumento" pattern="[0-9]*" />
+          <mat-hint align="end">{{ direccionFacturacion.get('numeroDocumento')?.value?.length || 0}} / 12</mat-hint>
+        </mat-form-field>
+      </div>
+      <div>
+        <label class="block">Provincia *</label>
+        <mat-form-field appearance="outline" color="accent" class="w-full">
+          <mat-select formControlName="cons_provincia" required>
+            <mat-option *ngFor="let provincia of provincias" [value]="provincia.cons_provincia"
+              (click)="obtenerLocalidades(provincia.cons_provincia)">
+              {{ provincia.provincia }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div>
+        <label class="block">Localidad *</label>
+        <mat-form-field appearance="outline" color="accent" class="w-full">
+          <mat-select formControlName="cons_localidad" required>
+            <mat-option *ngFor="let localidad of localidades" [value]="localidad.cons_localidad">
+              {{ localidad.localidad }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div>
+        <label class="block">Teléfono fijo *</label>
+        <mat-form-field appearance="outline" color="accent" class="w-full">
+          <input matInput maxlength="15" placeholder="Escriba aquí el teléfono fijo" formControlName="telefono_fijo"
+            pattern="[0-9]*" />
+          <mat-hint align="end">{{ direccionFacturacion.get('telefono_fijo')?.value?.length || 0}} / 15</mat-hint>
+        </mat-form-field>
+      </div>
+      <div>
+        <label class="block">Teléfono móvil *</label>
+        <mat-form-field appearance="outline" color="accent" class="w-full">
+          <input matInput maxlength="15" placeholder="Escriba aquí el teléfono móvil" formControlName="telefono_movil"
+            pattern="[0-9]*" />
+          <mat-hint align="end">{{ direccionFacturacion.get('telefono_movil')?.value?.length || 0}} / 15</mat-hint>
+        </mat-form-field>
+      </div>
+    </div>
+  </form>
+</div>
+
+<!-- Botones -->
+<div class="text-right p-4">
+  <button mat-flat-button color="accent" class="mr-2" style="width: 110px" (click)="previous()">Atrás</button>
+  <button *ngIf="currentDireccion || direccionFacturacion.valid || opcionDireccionEnvio" mat-flat-button color="accent"
+    style="width: 110px" (click)="guardarEnvioFacturacion(1)">
+    Siguiente
+  </button>
+</div>

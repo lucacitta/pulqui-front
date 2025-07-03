@@ -1,0 +1,42 @@
+/*
+Template Name: Material Pro Admin
+Author: Themedesigner
+Email: niravjoshi87@gmail.com
+File: scss
+*/
+
+@use '@angular/material' as mat;
+
+/* Material Theme Colors */
+$blue-app-primary: mat.m2-define-palette(mat.$m2-blue-palette);
+$blue-app-accent: mat.m2-define-palette(mat.$m2-amber-palette, A200, A100, A400);
+$blue-app-warn: mat.m2-define-palette(mat.$m2-red-palette);
+
+// Create the theme object (a Sass map containing all of the palettes).
+$blue-app-theme: mat.m2-define-light-theme((
+  color: (
+    primary: $blue-app-primary,
+    accent: $blue-app-accent,
+    warn: $blue-app-warn,
+  )
+));
+
+$themecolor: #1E88E5;
+$themecolor-alt: #1E88E5;
+$white: #fff;
+
+#snav {
+  .mat-nav-list .mat-list-item {
+    .mat-list-item-content {
+      &:hover {
+        > a {
+          color: $themecolor;
+        }
+      }
+    }
+    &.selected > .mat-list-item-content > a {
+      background: $themecolor-alt;
+      color: $white;
+    }
+  }
+}

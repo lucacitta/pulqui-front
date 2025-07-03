@@ -1,0 +1,70 @@
+<div class="flex flex-row  space-x-2">
+  @if(!isLogged()){
+  <!-- <div class="mr-2">
+    <button (click)="login.emit(false)" mat-raised-button id="btn_register">
+      <mat-icon id="btn_register">person_add</mat-icon>
+      <span class="max-sm:hidden" id="btn_register"> Registrarse </span>
+    </button>
+  </div> -->
+
+  <div *ngIf="headerType === 'nav'">
+    <button (click)="login.emit(true)" mat-raised-button>
+      <mat-icon>login</mat-icon>
+      <span class="max-sm:hidden"> Ingresar </span>
+    </button>
+  </div>
+  <div *ngIf="headerType === 'subnav'">
+    <button (click)="login.emit(true)"
+      class="bg-transparent text-pulqui flex flex-col border-none items-center !text-sm">
+      <mat-icon>login</mat-icon>
+      <span> Ingresar </span>
+    </button>
+  </div>
+  <div *ngIf="headerType === 'menu'" class="w-full">
+    <button (click)="login.emit(true)"
+      class="w-full bg-pulqui text-pulquigray border-none !text-sm flex justify-center items-center rounded-lg p-2">
+      <mat-icon>login</mat-icon>
+      <span class="ml-2"> Ingresar </span>
+    </button>
+  </div>
+  }
+  @if(isLogged()){
+  <button class="!text-white" [routerLink]="['/favorites']" mat-icon-button aria-label="Example icon-button with heart icon">
+    <mat-icon>favorite</mat-icon>
+  </button>
+  <app-notification class="!text-white"></app-notification>
+  <h4 class="!text-base text-white flex items-center">{{user().first_name}}</h4>
+  <button class="!text-white" mat-icon-button [matMenuTriggerFor]="profileMenu">
+    <mat-icon>face</mat-icon>
+  </button>
+  }
+</div>
+
+
+<mat-menu #profileMenu="matMenu" xPosition="before">
+  <button mat-menu-item [routerLink]="['/profile']">
+    <mat-icon>perm_identity</mat-icon>
+    <span>Mi Cuenta</span>
+  </button>
+  <button [routerLink]="['/history']" mat-menu-item>
+    <mat-icon>history_toggle_off</mat-icon>
+    <span>Historial de compras</span>
+  </button>
+  <button [routerLink]="['/favorites']" mat-menu-item>
+    <mat-icon>favorite_border</mat-icon>
+    <span>Favoritos</span>
+  </button>
+  <button [routerLink]="['/marketplace/contact-us']" mat-menu-item>
+    <mat-icon>help</mat-icon>
+    <span>Soporte</span>
+  </button>
+  <button (click)="onOpenAdmin()" [appValidation]="'v_admin'" mat-menu-item>
+    <mat-icon>admin_panel_settings</mat-icon>
+    <span>Administración</span>
+  </button>
+  <mat-divider></mat-divider>
+  <button (click)="logout()" mat-menu-item>
+    <mat-icon>exit_to_app</mat-icon>
+    <span>Cerrar sesión</span>
+  </button>
+</mat-menu>

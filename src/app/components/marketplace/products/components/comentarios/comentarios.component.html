@@ -1,0 +1,31 @@
+<div class="comments__product my-6">
+  <h4 class="!text-2xl font-medium mb-4">Últimos comentarios realizados</h4>
+
+  <div class="space-y-4">
+    <!-- Recorremos los comentarios -->
+    <mat-card class="shadow-lg" *ngFor="let item of comentarios | async">
+      <mat-card-header>
+        <div mat-card-avatar class="bg-yellow-500 rounded-full w-10 h-10 flex items-center justify-center">
+          <span class="text-white text-lg">{{ item.nombres.charAt(0) }}</span>
+        </div>
+        <mat-card-title class="text-lg font-bold">{{ item.nombres }} {{ item.apellidos }}</mat-card-title>
+        <mat-card-subtitle class="text-sm text-gray-500">{{ item.fecha | date : 'd/M/y' }}</mat-card-subtitle>
+      </mat-card-header>
+
+      <mat-card-content>
+        <!-- Uso de ngx-stars con Tailwind para estrellas -->
+        <div class="mb-2">
+          <ngx-stars
+            [readonly]="true"
+            [size]="1.5"
+            [color]="'#f4b400'"
+            [maxStars]="5"
+            [initialStars]="item.calificacion"
+            class="inline-block"
+          ></ngx-stars>
+        </div>
+        <p class="text-gray-700">{{ item.comentario }}</p>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

@@ -1,0 +1,30 @@
+<div class="container mx-auto py-8">
+  <section aria-labelledby="carousel-heading" role="region" class="relative">
+
+    <div class="carousel-container relative overflow-hidden rounded-lg">
+      <div class="carousel-items flex transition-transform duration-500 ease-in-out" 
+           [style.transform]="'translateX(-' + currentIndex * 100 + '%)'">
+        <article *ngFor="let slide of slides; let i = index" 
+             class="carousel-item min-w-full h-64 flex items-center justify-center bg-cover bg-center"
+             [class.active]="currentIndex === i"
+             [style.backgroundImage]="'url(' + slide.image + ')'">
+          <div class="content text-white">
+            <h2 class="text-left">{{ slide.title }}</h2>
+            <div class="flex justify-start">
+              <a mat-stroked-button color="primary" href="#" class="mt-4">{{ slide.buttonText }}</a>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+
+    <div *ngIf="!isMobile" class="navigation-buttons absolute inset-0 flex justify-between items-center px-4">
+      <button mat-icon-button (click)="prevSlide()" aria-label="Slide anterior" class="bg-transparent border-none">
+        <mat-icon fontSize="large" class="bg-transparent text-white">navigate_before</mat-icon>
+      </button>
+      <button mat-icon-button (click)="nextSlide()" aria-label="Slide siguiente" class="bg-transparent border-none">
+        <mat-icon fontSize="large" class="bg-transparent text-white">navigate_next</mat-icon>
+      </button>
+    </div>
+  </section>
+</div>

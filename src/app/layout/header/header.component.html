@@ -1,0 +1,98 @@
+<header class="header fixed top-0 left-0 right-0 z-50 bg-pulquigray shadow-md p-4">
+  <div class="flex justify-between items-center max-w-[1200px] m-auto xl:px-9">
+    <div class="flex items-center sm:w-auto w-[3rem] overflow-hidden">
+      <button *ngIf="(screenSize$ | async) === 'desktop'" (click)="toggleMenu()"
+        class="flex flex-col items-center text-white bg-transparent border-none mr-4">
+        <mat-icon class="cursor-pointer !text-3xl !w-8 !h-auto">menu</mat-icon>
+      </button>
+      <!-- Logo -->
+      <picture class="cursor-pointer" [routerLink]="['/']">
+        <source srcset="assets/images/pulqui/logo-desktop.png" media="(min-width: 768px)" />
+        <img src="assets/images/pulqui/logo.png" alt="Logo Pulqui" class="h-8 md:h-10" />
+      </picture>
+    </div>
+    <div class="flex items-center w-full sm:w-3/4 justify-end">
+      <!-- Buscador -->
+      <div class="flex items-center w-full sm:max-w-md ml-4 relative">
+        <input type="text" placeholder="Buscar"
+          class="!text-white bg-gray-600 flex-1 w-full p-2 border rounded-md focus:outline-none placeholder-gray-300"
+          [(ngModel)]="searchInput" name="searchInput" (ngModelChange)="onSearchChange($event)" #productSearchInput />
+        <button
+          class="flex flex-col items-center text-sm text-gray-300 bg-transparent border-none absolute right-0 top-1">
+          <mat-icon>search</mat-icon>
+        </button>
+      </div>
+
+      <!-- Botones de Carrito e Ingresar (Solo en Desktop) -->
+      <nav class="ml-4 hidden sm:flex items-center gap-4 bg-pulquigray" *ngIf="(screenSize$ | async) === 'desktop'">
+        @if(isLogged()){
+
+
+        <button [routerLink]="['marketplace/shopping-cart']"
+          class="flex items-center gap-1 text-white text-sm bg-transparent border-none cursor-pointer">
+
+          <div class="flex relative">
+            <div class="relative">
+              <mat-icon>shopping_cart</mat-icon>
+              @if(itemCart() > 0){
+              <span
+                class="w-[6px] h-[6px] rounded-full border-2 border-[#43e508de] absolute -right-1 -top-1 border-explosion">
+              </span>
+              <div class="w-[6px] h-[6px] rounded-full bg-[#43e508de] absolute -right-[4.5px] -top-[3.5px]"></div>
+              }
+            </div>
+            <span class="relative top-5 -bottom-2 right-1 text-xs text-white rounded-full text-center">{{
+              itemCart() }}</span>
+          </div>
+        </button>
+        }
+        <app-vertical-header-account [headerType]="'nav'" (login)="initLogin($event)"></app-vertical-header-account>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<!-- Subheader (Solo en Mobile) -->
+<nav
+  class="header__nav fixed bottom-0 left-0 right-0 bg-pulquigray shadow-md flex justify-around items-center py-2 z-50"
+  *ngIf="(screenSize$ | async) === 'mobile'">
+  <button [routerLink]="['marketplace/home']" class="flex flex-col items-center text-sm text-white bg-transparent border-none">
+    <mat-icon>home</mat-icon>
+    Inicio
+  </button>
+  <button class="flex flex-col items-center text-sm text-white bg-transparent border-none" (click)="toggleMenu()">
+    <mat-icon>menu</mat-icon>
+    Menú
+  </button>
+  <button [routerLink]="['marketplace/shopping-cart']" class="flex flex-col items-center text-sm text-white bg-transparent border-none">
+    <mat-icon>shopping_cart</mat-icon>
+  </button>
+  <app-vertical-header-account [headerType]="'subnav'" (login)="initLogin($event)"></app-vertical-header-account>
+</nav>
+
+<!-- Menú Lateral -->
+<div class="menu-sidebar bg-pulquigray text-white" [class.open]="isMenuOpen">
+  <div class="menu-header">
+    <img src="assets/images/pulqui/logo.png" alt="Logo Pulqui" class="h-8" />
+    <button class="close-button text-gray-300" (click)="toggleMenu()">
+      <mat-icon class="!text-3xl !w-8 !h-auto">close</mat-icon>
+    </button>
+  </div>
+  <ul class="menu-items">
+    <li><a href="#">Inicio</a></li>
+    <!-- <li><a href="#">Carrito</a></li> -->
+    <li><a class="cursor-pointer" (click)="descargarCatalogo()">Descargar catálogo</a></li>
+    <li><a (click)="toggleMenu()" [routerLink]="['/marketplace/contact-us']">Contacto</a></li>
+    <!-- <li><a href="#">Sobre Pulqui</a></li> -->
+  </ul>
+  <ul class="menu-items !border-none">
+    <li (click)="openCategory(item)" class="cursor-pointer" *ngFor="let item of categories">{{
+      item?.name.charAt(0).toUpperCase() + item?.name.slice(1).toLowerCase() }}<a href="#"></a></li>
+    <li class="mt-8">
+      <!-- <app-vertical-header-account [headerType]="'menu'" (login)="initLogin($event)"></app-vertical-header-account> -->
+    </li>
+  </ul>
+</div>
+
+<!-- Fondo oscuro -->
+<div class="menu-overlay" [class.visible]="isMenuOpen" (click)="toggleMenu()"></div>

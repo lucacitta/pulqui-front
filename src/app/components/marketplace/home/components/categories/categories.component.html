@@ -1,0 +1,27 @@
+<section class="categories max-w-[1200px] m-auto px-5 xl:px-9 my-12">
+  <h2 class="text-white !text-lg md:!text-2xl !mb-4 px-2 xl:px-0 w-full">
+    Categorías
+  </h2>
+
+  <!-- Spinner mientras carga -->
+  <div *ngIf="isLoading" class="loader-container">
+    <div class="loader"></div>
+  </div>
+
+  <!-- Grid de categorías -->
+  <div *ngIf="!isLoading" class="categories__box flex justify-center xl:justify-between items-center flex-wrap">
+    <ng-container *ngIf="categories.length; else noCats">
+      <div *ngFor="let category of categories; trackBy: trackById" (click)="openCategory(category)"
+        class="categories__width cursor-pointer bg-pulqui/20 text-pulqui h-[120px] sm:h-[80px] flex flex-col sm:flex-row justify-center rounded-md items-center p-2 mb-4">
+        <img [src]="category.imagen" alt="" class="w-10" />
+        <h3 class="!text-center sm:!text-left !text-xs sm:!text-base sm:!ml-4 !mb-0 !mt-2 sm:!mt-0">
+          {{ category.name }}
+        </h3>
+      </div>
+    </ng-container>
+
+    <ng-template #noCats>
+      <div class="text-white">No hay categorías disponibles.</div>
+    </ng-template>
+  </div>
+</section>

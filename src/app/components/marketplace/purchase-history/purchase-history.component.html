@@ -1,0 +1,27 @@
+<div class="p-10 bg-gray-100">
+
+  <div class="flex items-center justify-between flex-col lg:flex-row">
+    <h6 class="text-xs">Tu Historial de compras</h6>
+
+    <div class="flex items-start md:items-center">
+      <button mat-icon-button (click)="clearDates()" matTooltip="Limpiar Filtro" *ngIf="startDate || endDate">
+        <mat-icon class="text-black">delete</mat-icon>
+      </button>
+      <mat-form-field (click)="picker.open()" class="flex items-center justify-center w-full sm:w-64 md:mt-5 md:mr-4">
+        <mat-date-range-input [formGroup]="range" [rangePicker]="picker">
+          <input matStartDate readonly placeholder="dd/mm/aaaa" formControlName="start"/>
+          <input matEndDate (dateChange)="buscarCompras($event)" readonly placeholder="dd/mm/aaaa" formControlName="end" />
+        </mat-date-range-input>
+
+        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+
+        <mat-date-range-picker #picker></mat-date-range-picker>
+      </mat-form-field>
+      <!-- <p>Selected range: {{range.value | json}}</p> -->
+
+    </div>
+  </div>
+  <ng-container class="">
+    <app-producto-comprado [startDate]="fechaInicial" [endDate]="fechaFinal" #child></app-producto-comprado>
+  </ng-container>
+</div>

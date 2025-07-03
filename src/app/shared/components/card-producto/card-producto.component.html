@@ -1,0 +1,58 @@
+<mat-card [ngClass]="{'!bg-white': item.nombre_producto, '!bg-transparent !shadow-none !border-none mx-3': item.nombre_cliente, }"   class="max-w-full h-full rounded-lg border-b !bg-white flex flex-col overflow-hidden">
+  <section class="flex flex-col flex-none">
+    <div class="flex flex-row-reverse pt-4 pr-3 pl-3 pb-3">
+      <app-fav-share [item]="item"></app-fav-share>
+    </div>
+    <div [ngClass]="{'h-[180px]': item.nombre_producto, 'h-[150px]': item.nombre_cliente, }" class="flex items-center justify-center">
+      <a *ngIf="item?.cons_producto" [routerLink]="'/../marketplace/producto/' + item.cons_producto">
+        <img class="h-[180px] w-[220px] object-contain"
+          [src]="item?.enlace_imagen || item?.url_image || default_image" alt="Imagen del producto">
+      </a>
+      <a *ngIf="item?.url_logo" class="overflow-hidden rounded-full h-[130px] w-[130px]">
+        <img class="h-[130px] w-[130px] object-top"
+          [src]="item?.url_logo || default_image" alt="Imagen de la tienda">
+      </a>
+
+    </div>
+  </section>
+
+
+  <section class="p-3 flex-none">
+    <div *ngIf="item?.nombre_producto" class="bg-[#ffb300] text-sm text-white text-center m-0 inline-block rounded-lg px-2">
+      Min. {{item.minimoCompra > 0 ? item.minimoCompra : 1}} unidades
+    </div>
+    <a *ngIf="item?.nombre_producto" [matTooltip]="item.nombre_producto" 
+        [routerLink]="'/../marketplace/producto/' + item.cons_producto"
+      class="flex no-underline mt-1">
+      <p class="text-base text-pretty line-clamp-4 text-pulquigray">
+        {{ capitalize(item.nombre_producto) }}
+      </p>
+    </a>
+    <a *ngIf="item?.nombre_cliente" [matTooltip]="item.nombre_cliente" class="flex no-underline mt-1">
+      <p class="text-base text-pretty line-clamp-4 text-gray-500 text-center w-full">
+        {{ capitalize(item.nombre_cliente) }}
+      </p>
+    </a>
+
+    <a class="no-underline" 
+    [routerLink]="['/marketplace/products']"
+    [queryParams]="{ category: item.cons_categoria_producto }">
+      <p class="text-sm text-gray-500">{{ capitalize(item.des_subcategoria_producto) }}
+        
+      </p>
+    </a>
+  </section>
+
+  <section class="mt-auto p-3 flex-none">
+    @if(item.porcentaje>0){
+    <span class="line-through text-gray-500">{{ getUnitPesos(item) | currency: 'COP':'symbol-narrow' }}</span>
+    }
+    <div>
+      <p class="text-2xl !mb-0 text-blue-800">
+        <strong>{{ getUnitDiscount(item) | currency: 'COP':'symbol-narrow' }}</strong>
+        <span *ngIf="item?.porcentaje" class="text-xs text-blue-800 ml-1">{{item?.porcentaje}}% OFF</span>
+      </p>
+    </div>
+    <p *ngIf="item?.nombre_producto" class="text-sm text-blue-800">Precio por unidad {{this.is_taxInclude?"IVA Incluido":"+ IVA"}}</p>
+  </section>
+</mat-card>

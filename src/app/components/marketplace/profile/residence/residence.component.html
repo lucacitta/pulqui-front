@@ -1,0 +1,21 @@
+<mat-card class="md:mx-20 py-4">
+  <mat-card-content *ngFor="let item of address$()" class="mb-8">
+    <p class="text-[#59616A] text-xl font-bold px-4">
+      {{ item.direccion_envio }} {{ item.direccion_complementaria }}
+    </p>
+    <div class="text-lg px-4">
+      <p class="text-[#8E96A1] !mb-0">{{ item.provincia }}</p>
+      <p class="text-[#8E96A1]">{{ item.nombres }}</p>
+    </div>
+  </mat-card-content>
+  <!-- <footer *ngIf="false" class="mx-5 mt-8 border-t border-[#D0D0D4] h-15 cursor-default flex justify-center items-center w-[calc(100%-40px)]">
+    <div class="w-full flex">
+      <p class="text-[#F8A81B] text-lg">Agregar nuevo domicilio</p>
+      <div class="ico flex justify-center items-center w-5">
+        <svg width="8" height="12" viewBox="0 0 8 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M0.0378221 1.33498L4.35476 5.69407L0.00510189 10.0205L1.33413 11.3596L7.03233 5.70416L1.3769 0.00595798L0.0378221 1.33498Z" fill="#F8A81B"></path>
+        </svg>
+      </div>
+    </div>
+  </footer> -->
+</mat-card>

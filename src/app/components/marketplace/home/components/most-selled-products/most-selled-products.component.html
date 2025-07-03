@@ -1,0 +1,26 @@
+<section class="most-selled-products max-w-[1200px] m-auto xl:px-9 my-8">
+    <h2 class="text-white !text-lg md:!text-2xl mb-2 px-5 xl:px-0">
+        Productos más vendidos
+    </h2>
+
+    <div class="products-slider max-w-[1200px]">
+
+        <!-- 1) Spinner mientras carga -->
+        <div *ngIf="isLoading" class="loader-container">
+            <div class="loader"></div>
+        </div>
+
+        <!-- 2) Carrusel cuando ya no está cargando -->
+        <ng-container *ngIf="!isLoading">
+            <div #slider class="slider max-w-[1200px] mx-auto" (mousedown)="dragStart($event)"
+                (touchstart)="dragStart($event)" (mousemove)="dragMove($event)" (touchmove)="dragMove($event)"
+                (mouseup)="dragEnd()" (mouseleave)="dragEnd()" (touchend)="dragEnd()">
+                <div class="slider-item" *ngFor="let p of products; trackBy: trackById">
+                    <app-card-producto [item]="p" [favorites]="p.favorites">
+                    </app-card-producto>
+                </div>
+            </div>
+        </ng-container>
+
+    </div>
+</section>

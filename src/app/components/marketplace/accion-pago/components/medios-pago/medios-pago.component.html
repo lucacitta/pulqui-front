@@ -1,0 +1,31 @@
+<h2 mat-dialog-title>Cuentas inscritas</h2>
+<mat-dialog-content>
+  <mat-nav-list *ngIf="!error; else errorLoad">
+    <mat-list-item *ngFor="let item of banks" style="margin: 5px">
+      <!-- <img [src]="item.image_url" style="width: 50px; height: 50px;" alt=""> -->
+      <div fxHide fxShow.gt-sm style="display: flex; flex-direction: column; margin-left: 5px; font-size: 2vh">
+        <p class="item_bank">Banco: {{ item.name_bank }}</p>
+        <p class="item_bank">Cuenta: {{ item.number_bank }} {{ item.reference ? ',Observación: ' + item.reference : '' }}</p>
+      </div>
+      <div fxShow fxHide.gt-sm style="display: flex; flex-direction: column; margin-left: 5px; font-size: 1.5vh">
+        <p class="item_bank">
+          Banco: {{ item.name_bank }}, Cuenta: {{ item.number_bank }}
+          {{ item.reference ? ',Observación: ' + item.reference : '' }}
+        </p>
+      </div>
+    </mat-list-item>
+  </mat-nav-list>
+  <ng-template #errorLoad>
+    <p style="font-weight: bold; font-size: 14px">No se logró cargar las cuentas inscritas</p>
+  </ng-template>
+
+  <p style="color: red; font-style: italic; font-size: 13px">
+    Al aceptar este método de pago deberá enviar el comprobante de su compra una vez se haya realizado el pago
+  </p>
+  <mat-action-list></mat-action-list>
+</mat-dialog-content>
+<mat-dialog-actions style="justify-content: center">
+  <button *ngIf="edit" mat-raised-button class="cancel-button" (click)="cancel()">Cancelar</button>
+  <button *ngIf="edit" mat-raised-button class="primary-button" (click)="save()">Aceptar</button>
+  <button *ngIf="!edit" mat-raised-button color="primary" (click)="cancel()">Cerrar</button>
+</mat-dialog-actions>

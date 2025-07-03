@@ -1,0 +1,20 @@
+<div *ngIf="items().length; else noStores" class="p-6 border_promos bg-[#f6f6f6]">
+  <div class="mx-6 font-medium text-[#333e4a] uppercase">Tiendas</div>
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 md:gap-1 sm:gap-16  bg-white" >
+    <div class="cursor-pointer m-3 " *ngFor="let item of items() " (click)="openStore(item)">
+       <mat-card class="border-none rounded-none bg-white" (click)="openStore(item)"> -->
+        <div class="py-8 px-4 flex items-center justify-center h-40">
+          <img mat-card-image [src]="item.url_logo" class="w-full h-auto max-h-full object-contain" />
+        </div>
+         <div class="text-center text-[#ffb300] font-medium text-xs mt-auto border_client p-3 pb-4 uppercase">
+          {{ item.nombre_cliente }}
+        </div> 
+       </mat-card>
+    </div>
+  </div>
+</div>
+<ng-template #noStores>
+  <div class="px-6 my-5 bg-[#f6f6f6]">
+    <div class="mx-6 font-medium text-[#333e4a] uppercase">Sin Tiendas</div>
+  </div>
+</ng-template>

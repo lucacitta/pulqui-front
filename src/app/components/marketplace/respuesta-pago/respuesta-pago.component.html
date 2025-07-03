@@ -1,0 +1,63 @@
+<div class="flex flex-row justify-center items-center mt-7">
+  <mat-card>
+    <mat-card-header class="pb-0">
+      <mat-card-title class="font-bold">Respuesta de transacción</mat-card-title>
+    </mat-card-header>
+
+    <div class="flex flex-col justify-center items-center pb-4 pt-4">
+      <img
+        mat-card-image
+        width="200"
+        height="100"
+        class="mb-4"
+        src="../../../assets/images/pulqui/logo-big.png"
+        alt="Logo de la tienda pulqui"
+      />
+    </div>
+    <mat-card-content>
+      <div class="flex flex-row justify-center items-center">
+        <p class="mt-0 font-bold text-center text-3xl">Detalles de la orden</p>
+      </div>
+      <div class="flex flex-col items-start">
+        <p>
+          <b>Referencia de pago:</b>
+          {{ datosRespuesta.referenceCode }}
+        </p>
+        <p>
+          <b>Estado:</b>
+          <b [ngStyle]="{ color: estadoPago === 'TA' ? 'green' : 'red' }">{{ datosRespuesta.lapTransactionState }}</b>
+        </p>
+        <p>
+          <b>Valor Pagado:</b>
+          $ {{ datosRespuesta.amount }}
+        </p>
+        <p>
+          <b>Fecha:</b>
+          {{ datosRespuesta.processingDateString }}
+        </p>
+        <p>
+          <b>Pyment:</b>
+          {{ datosRespuesta.payment_id }}
+        </p>
+      </div>
+    </mat-card-content>
+
+    <mat-card-content *ngIf="showMsg">
+      <h3 class="mt-0">¡Información importante!</h3>
+      <div>
+        {{ detalle }}
+      </div>
+      <app-actualizar-documentacion
+        [fechaUpdateDoc]="fechaActualizacion"
+        [mensage]="showMsg"
+        [color]="'basic'"
+        (notify)="updContract()"
+      ></app-actualizar-documentacion>
+    </mat-card-content>
+
+    <div class="flex flex-row justify-center items-center mt-4 mb-4 gap-4">
+      <button mat-flat-button color="accent" (click)="onSeguirComprando()">Seguir Comprando</button>
+      <button mat-raised-button color="accent" (click)="onVerHistorial()">Ver Historial</button>
+    </div>
+  </mat-card>
+</div>

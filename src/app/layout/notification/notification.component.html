@@ -1,0 +1,44 @@
+<button mat-icon-button class="header__favorite" [matMenuTriggerFor]="menuAlerts" >
+    @if(unread > 0){
+        <mat-icon class="notranslate" [matBadge]="unread" matBadgeColor="warn">notification_important</mat-icon>
+    }
+    @if(unread == 0){
+        <mat-icon class="notranslate"  matBadgeColor="warn">notification_important</mat-icon>
+    }
+</button>
+
+<mat-menu #menuAlerts="matMenu" class="menu">
+    <div class="alerts">
+      <div class="alerts__title mb-3">Notificaciones</div>
+      @for(item of notifications;track item.id){
+        <div   class="row mb-2">
+          <div class="col-8" [ngStyle]="{'cursor': item.link ? 'pointer': 'auto'}" (click)="openLink($event, item)">
+              <div class="alerts__item__info__title row">{{conver(item.data, 'subject')}}</div>
+              <div class="alerts__item__info__content content row">{{conver(item.data, 'content')}}</div>
+          </div>
+          <div class="col-4 p-0">
+            <div class="row d-flex align-items-center">
+              <div class="col-sm p-0 text-small">
+                {{(item.fecha_creacion ? item.fecha_creacion : item.fecha_inicio) | dateTransform}}
+              </div>
+              @if(!item.fecha_inicio){
+                  <div  class="col-4 p-0">
+                    <button  mat-icon-button color="accent" (click)="inactivateNotification($event, item.id)" aria-label="Example icon button with a vertical three dot icon">
+                      <mat-icon>delete</mat-icon>
+                    </button>
+                  </div>
+              }
+            </div>
+          </div>
+        </div>
+      }
+      @if(notifications.length == 0){
+        <div class="alerts__non">
+          <div class="alerts__item__info">
+            <div class="alerts__item__info__content">No hay Notificaciones</div>
+            <button (click)="emitConnection()">aquí</button>
+          </div>
+        </div>
+      }
+    </div>
+</mat-menu>

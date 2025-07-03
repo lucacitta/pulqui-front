@@ -1,0 +1,29 @@
+<div *ngFor="let archivo of datos; let i = index" class="mb-4">
+  <mat-form-field class="w-full">
+    <mat-label>{{ archivo.nom }}</mat-label>
+    <div *ngIf="archivos[i]; else sinArchivo">
+      <input type="text" matInput disabled [value]="archivos[i]?.name | slice : 0 : 35" />
+      <button mat-icon-button matSuffix disabled>
+        <mat-icon>check_circle</mat-icon>
+      </button>
+    </div>
+    <ng-template #sinArchivo>
+      <input type="text" matInput disabled placeholder="No file selected" />
+    </ng-template>
+    <button mat-icon-button matSuffix *ngIf="archivos[i]; else attachFile" (click)="eliminarArchivo(i)">
+      <mat-icon>delete</mat-icon>
+    </button>
+    <ng-template #attachFile>
+      <button mat-icon-button matSuffix (click)="fileInput?.click()">
+        <mat-icon>attach_file</mat-icon>
+      </button>
+      <input
+        #fileInput
+        type="file"
+        hidden
+        (change)="cargarArchivos($event, i)"
+        accept="image/x-png, image/jpeg, application/pdf"
+      />
+    </ng-template>
+  </mat-form-field>
+</div>

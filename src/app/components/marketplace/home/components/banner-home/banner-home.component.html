@@ -1,0 +1,31 @@
+<section *ngIf="position === 'header'" class="banner-home max-w-[1200px] m-auto px-5 xl:px-9 !my-12 relative h-[500px] sm:h-[250px]">
+  <a href="https://blog.pulqui.com.ar/" target="_blank" rel="noopener noreferrer" class="cursor-pointer">   
+    <picture>   
+      <source 
+      srcset="../../../../../../assets/images/banner/banner-home-mob.jpg" 
+      media="(max-width: 640px)">
+
+      <img 
+        src="../../../../../../assets/images/banner/banner-home-desk.jpg" 
+        alt="Fondo Pulqui" 
+        class="w-full h-full object-cover object-bottom sm:object-left xl:object-contain rounded-lg overflow-hidden">
+    </picture>
+  </a>
+  </section>
+
+  <section *ngIf="position === 'footer'" class="banner-home max-w-[1200px] m-auto px-5 xl:px-9 !my-12 relative h-[500px] sm:h-[250px]">
+    <a href="https://blog.pulqui.com.ar/" target="_blank" rel="noopener noreferrer" class="cursor-pointer">   
+      <picture>
+          
+        <source 
+          srcset="../../../../../../assets/images/banner/banner-home-footer-mob.jpg" 
+          media="(max-width: 640px)">
+          
+        <img 
+          src="../../../../../../assets/images/banner/banner-home-footer-desk.jpg" 
+          alt="Fondo Pulqui" 
+          class="w-full h-full object-cover object-bottom xs:object-right lg:object-left xl:object-contain rounded-lg overflow-hidden">
+      </picture>
+    </a>
+    </section>
+  

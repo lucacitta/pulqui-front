@@ -1,0 +1,6 @@
+<div class="flex justify-center mt-1 w-full">
+  <button mat-raised-button (click)="subirDocumentos()" [color]="color" class="subirDocumentos">Actualizar documentación</button>
+</div>
+<ng-container *ngIf="documentos === false && mensage === true">
+  <p class="text-center mt-2">Actualiza tus documentos para continuar con el proceso</p>
+</ng-container>

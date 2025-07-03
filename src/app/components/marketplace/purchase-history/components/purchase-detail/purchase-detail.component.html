@@ -1,0 +1,108 @@
+<div class="h-screen flex flex-col items-center bg-[#f6f6f6]">
+  <div class="text-3xl font-bold mb-5 uppercase">Lista de productos</div>
+  <div class="flex flex-col md:flex-row w-full mt-4">
+    @if(item$()){
+      <mat-card class="w-full md:w-3/5 order-2 md:order-1 m-2 !border-none !shadow-none !bg-[#f6f6f6] px-8">
+        <mat-card-title>
+          <div class="text-2xl font-bold text-center mt-8">Realizar Devoluciones</div>
+        </mat-card-title>
+        <mat-card-content>
+          <div
+            *ngFor="let item of item$().productos"
+            class="flex flex-col items-center md:flex-row mt-4 border-[0] border-b border-solid border-black"
+          >
+            <figure class="mt-4">
+              <img class="w-28 h-28 rounded-lg shadow-md" [src]="item.enlace_imagen" />
+            </figure>
+            <div class="mt-4">
+              <div class="text-lg font-bold text-[#ffb300]">{{ item.nombre_producto }}</div>
+              <div class="text-sm text-gray-500">{{ item.referencia }}</div>
+              <div class="text-sm text-gray-700">Cantidad: {{ item.cantidad }}</div>
+              @if(item.fecha_entrega){ <div class="text-sm text-gray-700">Fecha de entrega de producto sin stock: {{ item.fecha_entrega }}</div> } 
+              <span *ngIf="item.fechas_entrega" class="text-xs text-gray-500">
+                Fechas de entrega: desde : {{ item.fechas_entrega.fecha_desde }} hasta : {{ item.fechas_entrega.fecha_hasta }}
+              </span>
+              <h6 class="mt-2 text-xl font-bold text-gray-800">$ {{ item.total | number }} {{ moneda_operacion }}</h6>
+            </div>
+            <footer class="flex flex-col md:flex-row items-center mt-4">
+              <button
+                mat-button
+                *ngIf="
+                  item$().puede_solicitar_devolucion == 1 &&
+                  !(item.devolucion_estado == 'P' || item.devolucion_estado == 'A' || item.devolucion_estado == 'R')
+                "
+                class="!text-white !bg-[#ffb300] !shadow-none cursor-pointer !px-4 mb-4 mb:mb-0"
+                (click)="setDevolucion(item)"
+              >
+                Realizar Devolución
+              </button>
+              <p *ngIf="item.devolucion_estado == 'P'">Pendiente por Devolución</p>
+              <p *ngIf="item.devolucion_estado == 'A'">Aprobado por Devolución</p>
+              <p *ngIf="item.devolucion_estado == 'R'">Rechazado por Devolución</p>
+              <p *ngIf="item.devolucion_estado == 'A' || item.devolucion_estado == 'R' || item.devolucion_estado == 'P'">
+                Productos por Devolución: {{ item.devolucion_cantidad }}
+              </p>
+              <p *ngIf="item.devolucion_estado == 'A' || item.devolucion_estado == 'R'">{{ item.devolucion_motivo_respuesta }}</p>
+            </footer>
+          </div>
+        </mat-card-content>
+      </mat-card>
+  
+      <mat-card class="w-full md:w-2/5 order-1 md:order-2 m-2 p-4 border rounded-lg shadow-md">
+        <mat-card-title>
+          <div class="text-2xl font-bold text-center my-8">Resumen de la compra</div>
+        </mat-card-title>
+        <mat-card-content>
+          <div class="space-y-2 border-[0] border-y border-solid border-[#B8BCC1] p-8">
+            <div class="flex justify-between">
+              <p class="text-lg">Transportadora</p>
+              <p class="font-bold text-gray-600">{{ item$()?.transportista_nombre || 'Acordar con el vendedor' }}</p>
+            </div>
+            <div class="flex justify-between">
+              <p class="text-lg">Medio de pago</p>
+              <p class="font-bold text-gray-600">{{ item$().medio_pago }}</p>
+            </div>
+            <div class="flex justify-between">
+              <p class="text-lg">Subtotal de productos</p>
+              <p class="font-bold text-gray-600">${{ item$().subtotal | number }} {{ moneda_operacion }}</p>
+            </div>
+            <div *ngIf="item$().descuentos > 0" class="flex justify-between">
+              <p class="text-lg">Descuento aplicado</p>
+              <p class="font-bold text-gray-600">- {{ item$().descuentos | number }} {{ moneda_operacion }}</p>
+            </div>
+            <!-- <div *ngIf="item$().productos[0].descuento_preferencial > 0" class="flex justify-between">
+              <p class="text-lg">Descuento preferencial</p>
+              <p class="font-bold text-gray-600">- {{ item$().productos[0].descuento_preferencial | number }} %</p>
+            </div>
+            <div *ngIf="item$().productos[0].descuento_por_volumen > 0" class="flex justify-between">
+              <p class="text-lg">Descuento por volumen</p>
+              <p class="font-bold text-gray-600">- {{ item$().productos[0].descuento_por_volumen | number }} %</p>
+            </div>
+            <div *ngIf="item$().productos[0].descuento_general > 0" class="flex justify-between">
+              <p class="text-lg">Código descuento General</p>
+              <p class="font-bold text-gray-600">- {{ item$().productos[0].descuento_general | number }} %</p>
+            </div>
+            <div *ngIf="item$().productos[0].descuento_por_cliente > 0" class="flex justify-between">
+              <p class="text-lg">Código descuento por cliente</p>
+              <p class="font-bold text-gray-600">- {{ item$().productos[0].descuento_por_cliente | number }} %</p>
+            </div> -->
+            <div class="flex justify-between">
+              <p class="text-lg">IVA</p>
+              <p class="font-bold text-gray-600">${{ item$().impuestos | number }} {{ moneda_operacion }}</p>
+            </div>
+            <div class="flex justify-between">
+              <p class="text-lg">Costo de envío</p>
+              <p class="font-bold text-gray-600">${{ item$().envio | number }} {{ moneda_operacion }}</p>
+            </div>
+          </div>
+          <div class="px-8 mt-4">
+            <p class="text-xl font-bold">Total: <span class="font-normal">$ {{ item$().total | number }} {{ moneda_operacion }}</span></p>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    } @else{
+      <div>No hay información para mostrar</div>
+    }
+    
+  </div>
+</div>

@@ -1,0 +1,28 @@
+<div class="product__prices" *ngIf="payMethods.length > 0">
+  <div class="product__prices__item">
+    <div class="product__prices__item__subtitle">
+      {{ selectPlan.valor | currency : 'USD' : 'symbol-narrow' }} {{ dataProduct.coin }}
+    </div>
+    <div class="product__prices__item__paid">{{ selectPlan.des_periodicidad_pago }}</div>
+
+    <form class="example-form" [formGroup]="formaItem" id="formaItem" (ngSubmit)="addItem(true)" name="formaItem">
+      <button mat-button class="product__prices__item__buttonother">Seleccionar otro periodo de pago</button>
+    </form>
+  </div>
+</div>
+
+<div class="flex justify-center product__buy">
+  <button mat-flat-button color="primary" class="w-full mt-5 mb-5" (click)="openDialogColor()">
+    Añadir al carrito
+  </button>
+  <button
+    *ngIf="false"
+    mat-stroked-button
+    color="accent"
+    class="product__buy__button"
+    (click)="addItem(false)"
+    [disabled]="!formaItem.valid"
+  >
+    Agregar al carrito de compras
+  </button>
+</div>

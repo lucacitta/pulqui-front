@@ -1,0 +1,50 @@
+<ng-container *ngIf="showPurchases && !loading">
+  <div class="flex flex-col !gap-8">
+    <ng-container *ngFor="let item of agrupadas() | orderMonths">
+
+      <mat-card *ngFor="let mes of item.value | orderMonths" class="p-5 !bg-white">
+        <header class="!border-b-2 border-black">
+          <p>{{checkNameMonth(mes.key)}} de {{item.key}}</p>
+        </header>
+
+        <div *ngFor="let item of mes.value" class="flex flex-col md:flex-row items-center">
+          <figure class="w-36 h-36 overflow-hidden">
+            <img src="{{ item.enlace_imagen }}" alt="Tienda" class="w-full h-full object-contain">
+          </figure>
+
+          <div class="flex flex-col !gap-0">
+            <div>
+              <p class="text-[#f6a705] text-lg !mb-0">{{item.nombre_cliente}}</p>
+              <p class="text-base text-gray-400 !mb-1">{{item.numero_orden}}</p>
+            </div>
+            <div class="text-gray-400" *ngIf="item.estado">Estado: {{item.estado}}</div>
+            <div class="text-gray-400" *ngIf="!item.estado">Estado: Pago Confirmado</div>
+            <div class="text-gray-400">Fecha de compra: {{item.fechaLabel}}</div>
+            <div class="text-xl font-semibold">
+              Valor: <span>$ {{item.total | number}} {{moneda_operacion}}</span>
+            </div>
+          </div>
+          <footer class="flex items-center mt-5 ml-0 md:ml-auto justify-center">
+            <button mat-fab extended class="flex text-center !text-white !shadow-lg items-center !bg-[#f6a705]"
+              (click)="showDetails(item)">
+              <mat-icon>visibility</mat-icon>
+              Ver Detalle
+            </button>
+          </footer>
+        </div>
+      </mat-card>
+
+    </ng-container>
+  </div>
+</ng-container>
+
+
+<mat-card *ngIf="loading" class="flex flex-col !bg-white h-[50vh] items-center justify-center">
+  <mat-progress-spinner class="mat-spinner" mode="indeterminate" [diameter]="80"></mat-progress-spinner>
+</mat-card>
+
+
+<mat-card *ngIf="!showPurchases && !loading" class="flex flex-col !bg-white h-[50vh] items-center justify-center">
+  <mat-icon style="color: #f6a705" class="text-5xl text-center !w-auto !h-auto">schedule</mat-icon>
+  <p class="text-3xl font-thin">No existen compras registradas</p>
+</mat-card>

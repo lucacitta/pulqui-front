@@ -1,0 +1,42 @@
+.container {
+  @apply mx-auto py-8;
+}
+
+.carousel-container {
+  @apply relative overflow-hidden rounded-lg shadow-lg;
+}
+
+.carousel-items {
+  @apply flex transition-transform duration-500 ease-in-out;
+}
+
+.carousel-item {
+  @apply min-w-full h-64 flex items-center justify-center bg-cover bg-center;
+  background-size: cover;
+  background-position: center;
+
+  .content {
+    @apply text-center text-white;
+
+    h2 {
+      @apply text-2xl font-bold;
+    }
+
+    p {
+      @apply text-lg;
+    }
+
+    a {
+      @apply mt-4 bg-white text-gray-800 px-4 py-2 rounded-full inline-block;
+      text-decoration: none;
+    }
+  }
+}
+
+.navigation-buttons {
+  @apply absolute inset-0 flex justify-between items-center px-4;
+
+  button {
+    @apply bg-white p-2 rounded-full shadow-md;
+  }
+}

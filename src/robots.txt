@@ -1,0 +1,6 @@
+# Group 2
+User-agent: *
+Allow: /
+
+Sitemap: https://pulqui.com.ar/assets/sitemap.xml
+robots.txt

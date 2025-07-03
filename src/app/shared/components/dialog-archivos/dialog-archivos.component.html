@@ -1,0 +1,32 @@
+<div class="p-4">
+  <p class="text-lg font-semibold">
+    {{ data.enunciado }}
+  </p>
+</div>
+<div class="p-4">
+  <app-subir-documentos [datos]="data.nombreArchivos" (files)="archivosCargados($event)"></app-subir-documentos>
+  <mat-error *ngIf="error" class="text-red-500">
+    Todos los archivos son
+    <strong>requeridos</strong>
+  </mat-error>
+  <div class="mt-4">
+    <mat-form-field appearance="fill" class="w-full">
+      <mat-label>Correo para envío de facturación</mat-label>
+      <input type="text" matInput [formControl]="email" />
+      <mat-error *ngIf="email.hasError('required')" class="text-red-500">
+        El correo para envío de facturación es un valor
+        <strong>requerido</strong>
+      </mat-error>
+      <mat-error *ngIf="email.hasError('email')" class="text-red-500">
+        El correo no es
+        <strong>válido</strong>
+      </mat-error>
+    </mat-form-field>
+  </div>
+  <div *ngIf="archivos != null" class="mt-4 flex items-center">
+    <mat-spinner *ngIf="loading" diameter="40"></mat-spinner>
+    <button mat-raised-button [disabled]="loading" class="ml-4 bg-blue-500 text-white" (click)="subirArchivos()">
+      Guardar documentos
+    </button>
+  </div>
+</div>

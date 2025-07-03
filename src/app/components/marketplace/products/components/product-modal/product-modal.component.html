@@ -1,0 +1,98 @@
+
+<div class="relative w-full">
+  <div class="absolute right-2 top-0 z-10">
+    <button (click)="toggleModal()" type="button" class="!bg-transparent !border-none p-2 ">
+      <mat-icon class="!text-3xl !w-8 !h-auto text-pulquigray">close</mat-icon>
+    </button>
+  </div>
+  <h3 mat-dialog-title *ngIf="showStock" class="!text-xl text-center">Complete la cantidad de productos para talle y color</h3>
+</div>
+
+<mat-dialog-content class="!max-h-60">
+
+  <div *ngIf="!showStock" class="flex justify-center items-center h-full">
+    <mat-spinner diameter="25" color="accent"></mat-spinner>
+  </div>
+  <div *ngIf="showStock && arTallas.length>=0">
+    <form [formGroup]="tallasForm" class="grid gap-2">
+      <div
+        formArrayName="colors"
+        class="grid gap-4"
+        [ngStyle]="{
+          'grid-column': '1/' + this.colorColumns,
+          'grid-template-columns': 'repeat(' + (this.colorColumns - 2) + ',1fr)'
+        }"
+      >
+        <div *ngFor="let item of colorsForm.controls; let i = index" [formGroupName]="i" class="grid gap-2">
+          <div class="flex flex-col items-center">
+            <div
+              class="w-6 h-6 rounded-full mb-2"
+              [ngStyle]="{ background: colorsSelect[i].color }"
+              [ngClass]="{ 'ring-2 ring-blue-500': colorsSelect[i].select }"
+            ></div>
+            <div *ngFor="let input of arTallas" [ngClass]="{ 'w-1/2': arTallas.length < 1, 'w-full': arTallas.length > 1 }">
+              <div
+                *ngIf="data.reference + '-' + colorsSelect[i].cod + '-' + input.cons_codigo"
+                class="flex items-center justify-center m-3"
+              >
+                <mat-form-field appearance="outline" class="!w-3/4 custom-height-input">
+                  <div class="bg-gray-200 mx-2">
+                    <input
+                    matInput
+                    type="number"
+                    min="0"
+                    (focusout)="
+                      onKeydown(
+                        $event,
+                        stock[data.reference + '-' + colorsSelect[i].cod + '-' + input.cons_codigo]
+                          ? stock[data.reference + '-' + colorsSelect[i].cod + '-' + input.cons_codigo]
+                          : 0,
+                        data.reference + '-' + colorsSelect[i].cod + '-' + input.cons_codigo,
+                        i
+                      )
+                    "
+                    formControlName="{{ data.reference }}-{{ colorsSelect[i].cod }}-{{ input.cons_codigo }}"
+                    (change)="changeEvent($event, stock[data.reference + '-' + colorsSelect[i].cod + '-' + input.cons_codigo])"
+                    class="text-xs border border-gray-300 rounded w-3/4 text-center"
+                  />
+                  </div>
+                  <span matTextPrefix>{{ input.cons_codigo }}</span>
+                  <span matTextSuffix>
+                    <ng-container
+                      *ngIf="stock[data.reference + '-' + colorsSelect[i].cod + '-' + input.cons_codigo]; else noStock"
+                    >
+                      <span class="text-green-600 text-xs flex truncate">{{ stockItem(i, input) }}</span>
+                    </ng-container>
+                    <ng-template #noStock>
+                      <span class="text-red-600 text-xs truncate">Sin Stock</span>
+                    </ng-template>
+                  </span>
+                  <!-- <mat-hint *ngIf="stock[data.reference + '-' + colorsSelect[i].cod + '-' + input.cons_codigo]" class="text-green-600 text-left w-full block mt-1">
+                    {{ stockItem(i, input) }}
+                  </mat-hint>
+                  <mat-hint *ngIf="!stock[data.reference + '-' + colorsSelect[i].cod + '-' + input.cons_codigo]" class="text-red-600 text-left w-full block mt-1">
+                    Sin Stock
+                  </mat-hint> -->
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions align="center" *ngIf="showStock">
+  <div class="flex-row">
+    <ng-container *ngIf="showStock">
+      <p class="text-center text-sm mt-2">
+        Los artículos que muestran en rojo no poseen stock, por lo que el tiempo de entrega será mayor al publicado.<br> <strong class="font-medium">Entrega en
+        Argentina, capital y GBA sin cargo, transportes al interior o fuera del país a cargo del cliente.</strong>
+      </p>
+    </ng-container>
+    <div class="flex justify-between sm:justify-end pt-4">
+      <button mat-button mat-dialog-close class="!text-red-600">Cancelar</button>
+      <button mat-flat-button color="accent" (click)="next()">Añadir al carrito</button>
+    </div>
+  </div>
+</mat-dialog-actions>

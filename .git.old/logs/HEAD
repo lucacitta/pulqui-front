@@ -1,0 +1,59 @@
+0000000000000000000000000000000000000000 4f85d0f399b5a849421dbddf778f1ef599ab3e7b Lucas Pereyra <lucaspereyra.dev@gmail.com> 1747082065 -0300	clone: from https://source.developers.google.com/p/pulqui-marketplace/r/new-front-tienda
+4f85d0f399b5a849421dbddf778f1ef599ab3e7b 840fa8a71bb1ea44448ecf38fa4b363d68bce826 Lucas Pereyra <lucaspereyra.dev@gmail.com> 1747082086 -0300	checkout: moving from master to prod
+840fa8a71bb1ea44448ecf38fa4b363d68bce826 fc8d4d74c87d21aceddfab8bbc81f8163c2816ec Lucas Pereyra <lucaspereyra.dev@gmail.com> 1747082281 -0300	commit: [ HOTFIX ] footer maps
+fc8d4d74c87d21aceddfab8bbc81f8163c2816ec b67e8f3f584f1fca6cfa3542c08d4b0a73fa9e38 Lucas Pereyra <lucaspereyra.dev@gmail.com> 1747082717 -0300	checkout: moving from prod to develop
+b67e8f3f584f1fca6cfa3542c08d4b0a73fa9e38 f3baf1f511d554d53e6a6b4cb0b76d0f4b1e31c6 Lucas Pereyra <lucaspereyra.dev@gmail.com> 1747082719 -0300	merge prod: Merge made by the 'ort' strategy.
+f3baf1f511d554d53e6a6b4cb0b76d0f4b1e31c6 b67e8f3f584f1fca6cfa3542c08d4b0a73fa9e38 Lucas Pereyra <lucaspereyra.dev@gmail.com> 1747082731 -0300	checkout: moving from develop to dev
+b67e8f3f584f1fca6cfa3542c08d4b0a73fa9e38 f3baf1f511d554d53e6a6b4cb0b76d0f4b1e31c6 Lucas Pereyra <lucaspereyra.dev@gmail.com> 1747082733 -0300	merge develop: Fast-forward
+f3baf1f511d554d53e6a6b4cb0b76d0f4b1e31c6 f3baf1f511d554d53e6a6b4cb0b76d0f4b1e31c6 Lucas Pereyra <lucaspereyra.dev@gmail.com> 1747187365 -0300	checkout: moving from dev to develop
+f3baf1f511d554d53e6a6b4cb0b76d0f4b1e31c6 f3baf1f511d554d53e6a6b4cb0b76d0f4b1e31c6 Lucas Pereyra <lucaspereyra.dev@gmail.com> 1747303671 -0300	reset: moving to HEAD
+f3baf1f511d554d53e6a6b4cb0b76d0f4b1e31c6 72045ca034924443cdc4ddd73b60675b97a0820f Lucas Pereyra <lucaspereyra.dev@gmail.com> 1747869074 -0300	commit: [ REFACTOR ] DireccionEnvio and DireccionFacturacion components for improved form handling and loading states; enhance UI responsiveness in CompraRapida component; optimize transportista loading logic; update HTML structure for better accessibility and maintainability.
+72045ca034924443cdc4ddd73b60675b97a0820f a596964c341d8e6090d699ab3c3374325ebc38a5 Lucas Pereyra <lucaspereyra.dev@gmail.com> 1747871886 -0300	commit: [ FIX ] Adjust filter visibility based on screen size; synchronize filter state with handset detection logic
+a596964c341d8e6090d699ab3c3374325ebc38a5 0094110b2808316308300db55798a8c317421c3a Lucas Pereyra <lucaspereyra.dev@gmail.com> 1747873257 -0300	commit: [ UPDATE ] banner
+0094110b2808316308300db55798a8c317421c3a 90d481ba1c49442007306c73cca421daee0d3bbd Lucas Pereyra <lucaspereyra.dev@gmail.com> 1747875491 -0300	commit: [ UPDATE ] package to dev
+90d481ba1c49442007306c73cca421daee0d3bbd 0094110b2808316308300db55798a8c317421c3a Lucas Pereyra <lucaspereyra.dev@gmail.com> 1747875499 -0300	reset: moving to HEAD~
+0094110b2808316308300db55798a8c317421c3a c78a233b7c561f308e6a9219cd96de11d209ecf4 Lucas Pereyra <lucaspereyra.dev@gmail.com> 1747875505 -0300	commit: [ UPDATE ] package to dev
+c78a233b7c561f308e6a9219cd96de11d209ecf4 f3baf1f511d554d53e6a6b4cb0b76d0f4b1e31c6 Lucas Pereyra <lucaspereyra.dev@gmail.com> 1747875835 -0300	checkout: moving from develop to dev
+f3baf1f511d554d53e6a6b4cb0b76d0f4b1e31c6 c78a233b7c561f308e6a9219cd96de11d209ecf4 Lucas Pereyra <lucaspereyra.dev@gmail.com> 1747875837 -0300	merge develop: Fast-forward
+c78a233b7c561f308e6a9219cd96de11d209ecf4 c78a233b7c561f308e6a9219cd96de11d209ecf4 Lucas Pereyra <lucaspereyra.dev@gmail.com> 1747875847 -0300	checkout: moving from dev to develop
+c78a233b7c561f308e6a9219cd96de11d209ecf4 fc8d4d74c87d21aceddfab8bbc81f8163c2816ec Lucas Pereyra <lucaspereyra.dev@gmail.com> 1748457488 -0300	checkout: moving from develop to prod
+fc8d4d74c87d21aceddfab8bbc81f8163c2816ec c78a233b7c561f308e6a9219cd96de11d209ecf4 Lucas Pereyra <lucaspereyra.dev@gmail.com> 1748457506 -0300	merge develop: Fast-forward
+c78a233b7c561f308e6a9219cd96de11d209ecf4 6258f30fe17ed907df8ab5e6d4c75b76a2aa4af7 Lucas Pereyra <lucaspereyra.dev@gmail.com> 1748457523 -0300	commit: [ UPDATE ] package.json
+6258f30fe17ed907df8ab5e6d4c75b76a2aa4af7 6d9d5db5821e66232975e1c53a20895951f0435c Lucas Pereyra <lucaspereyra.dev@gmail.com> 1748457773 -0300	commit: [ UPDATE ] banners
+6d9d5db5821e66232975e1c53a20895951f0435c e02b25f01a87ae8d70c9770f1e77bd89ab6e1c84 Lucas Pereyra <lucaspereyra.dev@gmail.com> 1748458117 -0300	commit: [ UPDATE ] banner
+e02b25f01a87ae8d70c9770f1e77bd89ab6e1c84 c78a233b7c561f308e6a9219cd96de11d209ecf4 Lucas Pereyra <lucaspereyra.dev@gmail.com> 1748909049 -0300	checkout: moving from prod to develop
+c78a233b7c561f308e6a9219cd96de11d209ecf4 91dbcc22c2e21f44a7fbf776b8f9f224fc74377a Lucas Pereyra <lucaspereyra.dev@gmail.com> 1748910504 -0300	commit: Refactor banners component to improve navigation and visibility logic
+91dbcc22c2e21f44a7fbf776b8f9f224fc74377a c78a233b7c561f308e6a9219cd96de11d209ecf4 Lucas Pereyra <lucaspereyra.dev@gmail.com> 1748910526 -0300	reset: moving to HEAD~
+c78a233b7c561f308e6a9219cd96de11d209ecf4 71492177299ec29745b2c46985225617e7cd9aa6 Lucas Pereyra <lucaspereyra.dev@gmail.com> 1748910541 -0300	commit: Refactor banners component to improve navigation and visibility logic
+71492177299ec29745b2c46985225617e7cd9aa6 c78a233b7c561f308e6a9219cd96de11d209ecf4 Lucas Pereyra <lucaspereyra.dev@gmail.com> 1748916268 -0300	checkout: moving from develop to dev
+c78a233b7c561f308e6a9219cd96de11d209ecf4 71492177299ec29745b2c46985225617e7cd9aa6 Lucas Pereyra <lucaspereyra.dev@gmail.com> 1748916270 -0300	merge develop: Fast-forward
+71492177299ec29745b2c46985225617e7cd9aa6 71492177299ec29745b2c46985225617e7cd9aa6 Lucas Pereyra <lucaspereyra.dev@gmail.com> 1748997336 -0300	checkout: moving from dev to develop
+71492177299ec29745b2c46985225617e7cd9aa6 2130f4a7399c67f1a32f69346c132dec5b2c7007 Lucas Pereyra <lucaspereyra.dev@gmail.com> 1748998863 -0300	commit: [ FIX ] scroll products card home
+2130f4a7399c67f1a32f69346c132dec5b2c7007 71492177299ec29745b2c46985225617e7cd9aa6 Lucas Pereyra <lucaspereyra.dev@gmail.com> 1748999181 -0300	checkout: moving from develop to dev
+71492177299ec29745b2c46985225617e7cd9aa6 2130f4a7399c67f1a32f69346c132dec5b2c7007 Lucas Pereyra <lucaspereyra.dev@gmail.com> 1748999184 -0300	merge develop: Fast-forward
+2130f4a7399c67f1a32f69346c132dec5b2c7007 2130f4a7399c67f1a32f69346c132dec5b2c7007 Lucas Pereyra <lucaspereyra.dev@gmail.com> 1748999192 -0300	checkout: moving from dev to develop
+2130f4a7399c67f1a32f69346c132dec5b2c7007 4b1546f7d91bb3688278f20d4ce3fde35f9c6016 Lucas Pereyra <lucaspereyra.dev@gmail.com> 1749151955 -0300	commit: [ UPDATE ] images
+4b1546f7d91bb3688278f20d4ce3fde35f9c6016 4463dbc0efae64d1a256fcb3e9ee1cac9eee26d0 Lucas Pereyra <lucaspereyra.dev@gmail.com> 1749232892 -0300	commit: [ UPDATE ] query banners url
+4463dbc0efae64d1a256fcb3e9ee1cac9eee26d0 e02b25f01a87ae8d70c9770f1e77bd89ab6e1c84 Lucas Pereyra <lucaspereyra.dev@gmail.com> 1749232900 -0300	checkout: moving from develop to prod
+e02b25f01a87ae8d70c9770f1e77bd89ab6e1c84 8144e60f5278b57a4d2ec5e7fa17ddfcbd2fffa0 Lucas Pereyra <lucaspereyra.dev@gmail.com> 1749232972 -0300	commit (merge): Merge branch 'develop' into prod
+8144e60f5278b57a4d2ec5e7fa17ddfcbd2fffa0 e02b25f01a87ae8d70c9770f1e77bd89ab6e1c84 Lucas Pereyra <lucaspereyra.dev@gmail.com> 1749232982 -0300	reset: moving to HEAD~
+e02b25f01a87ae8d70c9770f1e77bd89ab6e1c84 c7d124985439a5ba25586923532aa8163e4f1493 Lucas Pereyra <lucaspereyra.dev@gmail.com> 1749233010 -0300	commit: Merge branch 'develop' into prod
+c7d124985439a5ba25586923532aa8163e4f1493 25b23bf397806d3a3c5263bb37bf6e284a9fb2bc Lucas Pereyra <lucaspereyra.dev@gmail.com> 1749751917 -0300	commit: [ UPDATE ] banners
+25b23bf397806d3a3c5263bb37bf6e284a9fb2bc 2130f4a7399c67f1a32f69346c132dec5b2c7007 Lucas Pereyra <lucaspereyra.dev@gmail.com> 1750218060 -0300	checkout: moving from prod to dev
+2130f4a7399c67f1a32f69346c132dec5b2c7007 71492177299ec29745b2c46985225617e7cd9aa6 Lucas Pereyra <lucaspereyra.dev@gmail.com> 1750218100 -0300	reset: moving to HEAD~
+71492177299ec29745b2c46985225617e7cd9aa6 4463dbc0efae64d1a256fcb3e9ee1cac9eee26d0 Lucas Pereyra <lucaspereyra.dev@gmail.com> 1750218105 -0300	checkout: moving from dev to develop
+4463dbc0efae64d1a256fcb3e9ee1cac9eee26d0 085f076a381984d786254516be16bc58922835d8 Lucas Pereyra <lucaspereyra.dev@gmail.com> 1750218133 -0300	commit (merge): Merge branch 'prod' into develop
+085f076a381984d786254516be16bc58922835d8 71492177299ec29745b2c46985225617e7cd9aa6 Lucas Pereyra <lucaspereyra.dev@gmail.com> 1750218145 -0300	checkout: moving from develop to dev
+71492177299ec29745b2c46985225617e7cd9aa6 085f076a381984d786254516be16bc58922835d8 Lucas Pereyra <lucaspereyra.dev@gmail.com> 1750218148 -0300	merge develop: Fast-forward
+085f076a381984d786254516be16bc58922835d8 3104a7b8402e1a65a341bca4e3486a1a19649bda Lucas Pereyra <lucaspereyra.dev@gmail.com> 1750218185 -0300	commit: [ UPDATE ] package dev
+3104a7b8402e1a65a341bca4e3486a1a19649bda 085f076a381984d786254516be16bc58922835d8 Lucas Pereyra <lucaspereyra.dev@gmail.com> 1750218211 -0300	checkout: moving from dev to develop
+085f076a381984d786254516be16bc58922835d8 3104a7b8402e1a65a341bca4e3486a1a19649bda Lucas Pereyra <lucaspereyra.dev@gmail.com> 1750218213 -0300	merge dev: Fast-forward
+3104a7b8402e1a65a341bca4e3486a1a19649bda 25b23bf397806d3a3c5263bb37bf6e284a9fb2bc Lucas Pereyra <lucaspereyra.dev@gmail.com> 1750218223 -0300	checkout: moving from develop to prod
+25b23bf397806d3a3c5263bb37bf6e284a9fb2bc 3104a7b8402e1a65a341bca4e3486a1a19649bda Lucas Pereyra <lucaspereyra.dev@gmail.com> 1750816565 -0300	checkout: moving from prod to dev
+3104a7b8402e1a65a341bca4e3486a1a19649bda 3104a7b8402e1a65a341bca4e3486a1a19649bda Lucas Pereyra <lucaspereyra.dev@gmail.com> 1750816580 -0300	checkout: moving from dev to develop
+3104a7b8402e1a65a341bca4e3486a1a19649bda 970510e9e76311a126a939d41f9d595c531ee3f0 Lucas Pereyra <lucaspereyra.dev@gmail.com> 1751508540 -0300	commit: [ UPDATE ] header service to handle cart item count more robustly
+970510e9e76311a126a939d41f9d595c531ee3f0 25b23bf397806d3a3c5263bb37bf6e284a9fb2bc Lucas Pereyra <lucaspereyra.dev@gmail.com> 1751537959 -0300	checkout: moving from develop to prod
+25b23bf397806d3a3c5263bb37bf6e284a9fb2bc 970510e9e76311a126a939d41f9d595c531ee3f0 Lucas Pereyra <lucaspereyra.dev@gmail.com> 1751537961 -0300	merge develop: Fast-forward
+970510e9e76311a126a939d41f9d595c531ee3f0 86332b42a0b139dfb2c9eb395bb73b2cb575b5be Lucas Pereyra <lucaspereyra.dev@gmail.com> 1751537996 -0300	commit: [ UPDATE ] package
+86332b42a0b139dfb2c9eb395bb73b2cb575b5be 0000000000000000000000000000000000000000 Luca Citta <lucacitta@gmail.com> 1751579322 -0300	Branch: renamed refs/heads/prod to refs/heads/main
+0000000000000000000000000000000000000000 86332b42a0b139dfb2c9eb395bb73b2cb575b5be Luca Citta <lucacitta@gmail.com> 1751579322 -0300	Branch: renamed refs/heads/prod to refs/heads/main

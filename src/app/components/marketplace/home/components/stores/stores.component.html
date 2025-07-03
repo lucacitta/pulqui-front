@@ -1,0 +1,19 @@
+<!-- <div class="w-2/3">
+    <div>This is the JSON response for the stores:</div>
+    <pre class="w-3/3 overflow-y-auto"><code>{{stores}}</code></pre>
+</div>  -->
+<section class="stores max-w-[1200px] m-auto xl:px-9 my-8">
+    <h2 class="text-white !text-lg md:!text-2xl mb-2 px-5 xl:px-0">
+      Tiendas 
+    </h2>
+    <div class="px-5 xl:px-0 mb-5 flex flex-row overflow-y-auto no-scrollbar">
+      <!-- Listado de tiendas -->
+      <div *ngFor="let store of stores; trackBy: trackByStore" class="pr-1.5 last:pr-0" (click)="openStore(store.cons_cliente)">
+        <app-card-producto [item]="store" [favorites]="[]" class="bg-white"></app-card-producto>
+      </div>
+      <!-- Mensaje si no hay tiendas -->
+      <div *ngIf="!stores.length" class="text-white px-5">
+        No hay tiendas disponibles.
+      </div>
+    </div>
+</section>

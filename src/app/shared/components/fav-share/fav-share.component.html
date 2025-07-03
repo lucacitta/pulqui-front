@@ -1,0 +1,22 @@
+<!-- fav-share.component.html -->
+<ng-container *ngIf="idUsuario && prodId()">
+  <a
+    mat-mini-fab
+    class="flex justify-center text-center !w-8 !h-8"
+    (click)="toggleFavorite()"
+    [ngClass]="
+      isFavorite()
+        ? '!bg-blue-780 text-white'
+        : '!bg-transparent text-blue-700 border-[1px] border-solid border-blue-700'
+    "
+    [title]="
+      isFavorite()
+        ? 'Quitar de favoritos'
+        : 'Añadir a favoritos'
+    "
+  >
+    <mat-icon class="text-lg -mt-[2px]">
+      {{ isFavorite() ? 'favorite' : 'favorite_border' }}
+    </mat-icon>
+  </a>
+</ng-container>

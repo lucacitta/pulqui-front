@@ -1,0 +1,38 @@
+<!-- <app-header></app-header> -->
+<mat-toolbar class="!bg-pulquigray !text-white">
+  <button mat-icon-button class="" aria-label="Example icon-button with menu icon">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <span>My App</span>
+
+
+  <div class="flex items-center ml-3">
+    @if (showSearch()) {
+    <mat-form-field class="flex border border-solid">
+      <input matInput class="w-full pr-10 border border-solid" placeholder="Buscar" [(ngModel)]="query"
+        (ngModelChange)="search($event)" #productSearchInput />
+      <a class="absolute right-2 top-1/4 transform -translate-y-1/2 cursor-pointer flex items-center"
+        (click)="goMarketplace()">
+        <mat-icon class="!text-2xl">close</mat-icon>
+      </a>
+    </mat-form-field>
+
+    }
+    @else {
+    <button mat-icon-button (click)="showInputSearch()">
+      <mat-icon>search</mat-icon>
+    </button>
+    }
+  </div> 
+
+
+  <span class="mat-toolbar-spacer"></span>
+  <!-- <app-vertical-header-account (login)="initLogin($event)"></app-vertical-header-account> -->
+  <app-header></app-header>
+</mat-toolbar>
+
+
+<router-outlet />
+
+
+<app-footer></app-footer>

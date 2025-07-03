@@ -1,0 +1,10 @@
+@media (max-width: 768px) {
+  .ProductCartContainer {
+    width: 100%;
+    flex-direction: column;
+  }
+
+  .ProductCartContainer>* div {
+    width: 100%;
+  }
+}

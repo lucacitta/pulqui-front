@@ -1,0 +1,14 @@
+# pack-refs with: peeled fully-peeled sorted 
+b67e8f3f584f1fca6cfa3542c08d4b0a73fa9e38 refs/remotes/origin/dev
+b67e8f3f584f1fca6cfa3542c08d4b0a73fa9e38 refs/remotes/origin/develop
+3a7bce620e5b48a87eaed6fc48c27324cf7c175c refs/remotes/origin/feat/ajustes-ale
+e9e1adf1ce43c7840860f786dafa1a7db0c1db09 refs/remotes/origin/feat/ajustes-ale-banner
+aea2b129b52b8f3afba81ea03372ce2502e4b245 refs/remotes/origin/feat/banner-home
+250b6984387b5b473088fab3b82102e20da6a738 refs/remotes/origin/feat/home-ale
+820f0e6bf5c7cbfe50d3321f41266f6a794443a2 refs/remotes/origin/feat/product-ale
+98d3a3ab8b1e700cda98afcc25a260f416aec418 refs/remotes/origin/feat/registration_form
+00286fb62cb47d6a8cc7061155b4398218bcdfd7 refs/remotes/origin/feature-perfil-producto
+04bf0574c9347f27e320f1d16f554f6cd8fe52ce refs/remotes/origin/feature/new_history
+4f85d0f399b5a849421dbddf778f1ef599ab3e7b refs/remotes/origin/master
+840fa8a71bb1ea44448ecf38fa4b363d68bce826 refs/remotes/origin/prod
+a5299776ce07219f85e32b5b68dc22e699084179 refs/remotes/origin/qa

@@ -1,0 +1,48 @@
+/* .custom-height-input {
+    font-size: 12px;
+  }
+  
+  .custom-height-input .mat-form-field-wrapper {
+    padding-bottom: 0; 
+  }
+  
+  .custom-height-input .mat-form-field-flex {
+    height: 24px;
+    align-items: center; 
+  }
+  
+  .custom-height-input .mat-input-element {
+    height: 24px;
+    padding: 4px;
+    font-size: 12px; 
+  }
+  
+  .custom-height-input .mat-form-field-outline {
+    top: 0;
+  }
+  
+  .custom-height-input .mat-form-field-outline-start,
+  .custom-height-input .mat-form-field-outline-end {
+    border-width: 1px; 
+  }
+  
+  .custom-height-input .mat-form-field-prefix {
+    font-size: 12px; 
+  }
+  
+  .custom-height-input .mat-mdc-form-field-subscript-wrapper {
+    display: none; 
+  } */
+
+
+  /* Ocultar los botones de incremento y decremento en Chrome, Safari y Edge */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Ocultar los botones de incremento y decremento en Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}

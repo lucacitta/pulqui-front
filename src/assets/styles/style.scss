@@ -1,0 +1,90 @@
+@use '@angular/material' as mat;
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
+
+@include mat.core();
+
+
+th.mat-header-cell{
+  text-align: left;
+}
+
+@import "variable";
+
+@import "icons/themify-icons/themify-icons.css";
+@import "icons/font-awesome/css/font-awesome.css";
+@import "icons/flag-icon-css/flag-icon.min.css";
+@import "spinner";
+@import "app";
+@import "header";
+@import "widgets";
+
+@import "horizontal.scss";
+
+@import "pages";
+@import "sidebar";
+@import "dark-sidebar";
+@import "responsive";
+@import "rtl";
+@import "colors/red";
+@import "colors/blue";
+@import "colors/green";
+@import "colors/dark";
+
+
+// Red Theme
+.danger {
+  @include mat.all-component-colors($red-app-theme);
+}
+
+// Blue Theme
+
+.blue {
+  @include mat.all-component-colors($blue-app-theme);
+}
+
+// Green Theme
+
+.green {
+  @include mat.all-component-colors($green-app-theme);
+}
+
+// Dark Theme
+
+.dark {
+  @include mat.all-component-colors($dark-theme);
+}
+
+::-webkit-scrollbar{
+  width: 4px;
+  height: 4px
+}
+
+::-webkit-scrollbar-track{
+  background: #f1f1f1
+}
+
+::-webkit-scrollbar-thumb{
+  background: #ffb300
+}
+
+::-webkit-scrollbar-thumb:hover{
+  background: #555
+}
+
+
+// icons
+@import '../icons/style.css';
+
+.primary-button{
+  background-color: #F8A81B;
+  color: white;
+}
+
+.cancel-button{
+  background-color: #e65a4d!important;
+  color: white;
+}
+
+.mat-flat-button.mat-accent, .mat-raised-button.mat-accent, .mat-fab.mat-accent, .mat-mini-fab.mat-accent{
+  color: #fff;
+}

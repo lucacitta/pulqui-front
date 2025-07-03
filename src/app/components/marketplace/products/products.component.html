@@ -1,0 +1,303 @@
+<div class="flex justify-center items-center h-screen" *ngIf="!product.name">
+  <mat-spinner color="accent" mode="indeterminate"></mat-spinner>
+</div>
+<article *ngIf="product.name" class="product">
+  <ng-container *ngIf="(screenSize$ | async) === 'mobile'">
+    <h1 class="mb-4 !text-3xl">
+      {{ capitalize(product.name) }}
+    </h1>
+    <h2 class="!text-lg mb-6">
+      {{ capitalize(product.category) }}
+    </h2>
+  </ng-container>
+  <section class="mb-0 product__images sm:mb-8">
+
+    <mat-icon class="absolute text-pulqui icon__background">label_important</mat-icon>
+
+    <div class="product__box--shadow mb-9 sm:mb-16">
+      <app-product-gallery class="product__gallery" [images]="product.image"
+        [image]="product.url_image"></app-product-gallery>
+    </div>
+
+    <div class="product__center">
+
+      <!-- <mat-divider></mat-divider>
+
+      <div class="mt-4">
+        <h3 class="!text-3xl mb-4">Productos similares</h3>
+      </div>
+
+      <mat-divider></mat-divider> -->
+
+      <div class="product__center__data">
+        <div class="product__center detalle_producto">
+          <h3 class="!text-2xl mb-4">Detalle del producto</h3>
+          <ul class="border-2">
+            <li class="flex flex-col h-16 md:flex-row">
+              <span class="flex items-center w-1/2 h-full pl-5 font-medium bg-gray-200">Marcas:</span>
+              <p class="h-full pl-5 flex items-center bg-gray-100 w-1/2 !ml-0">{{ caracteristicas.marca }}</p>
+            </li>
+            <li class="flex flex-col h-16 md:flex-row "
+              *ngFor="let caracteristica of caracteristicas.caracteristicas; let i = index">
+              <span class="flex items-center w-1/2 h-full pl-5 font-medium bg-gray-200">{{ caracteristica.descripcion_1
+                }}:</span>
+              <p class="h-full pl-5 flex items-center bg-gray-100 w-1/2 !ml-0">{{ caracteristica.valores[0] }}</p>
+            </li>
+            <li class="flex flex-col h-16 md:flex-row" *ngIf="caracteristicas.url_pdf">
+              <span class="flex items-center w-1/2 h-full pl-5 font-medium bg-gray-200">Ficha técnica:</span>
+              <p class="h-full pl-5 flex items-center bg-gray-100 w-1/2 !ml-0">
+                <a [href]="caracteristicas.url_pdf" target="_blank">Ver Ficha Técnica</a>
+              </p>
+            </li>
+          </ul>
+        </div>
+        <h3 class="!text-2xl">Descripción</h3>
+
+        <div class="product__center__data__resum">
+          {{ product.description | textoCorto : verMas }}
+        </div>
+
+        <a class="text-blue-500 !text-base cursor-pointer" (click)="toggleVerMas()">
+          {{ verMas ? 'Ver menos' : 'Ver más' }}
+        </a>
+
+        <ng-container *ngIf="calificacion$ | async as cal">
+          <app-producto-calificacion class="z-0" *ngIf="isAuthenticated" [cal]="cal"
+            (enviaCalificacion)="onEviaCalificacion($event)"
+            (editaCalificacion)="onEditarCalificacion($event)"></app-producto-calificacion>
+
+          <app-comentarios [comentarios]="comentarios$"></app-comentarios>
+        </ng-container>
+      </div>
+    </div>
+  </section>
+
+  <section class="product--aside">
+    <div class="mb-4 product__description">
+      <ng-container *ngIf="(screenSize$ | async) === 'desktop'">
+        <h1 class="mb-4 !text-3xl">
+          {{ capitalize(product.name) }}
+        </h1>
+        <div class="flex items-center gap-2">
+          <h2 class="!text-lg mb-6">
+            {{ capitalize(product.category) }}
+          </h2>
+          <div class="ml-3 -mt-3">
+            <a mat-mini-fab class="flex justify-center text-center !w-8 !h-8" (click)="toggleFavorite()"
+              [ngClass]="
+              idUsuario == 0
+                ? 'hidden-favorite'
+                : favorites.includes(+product.cons_producto)
+                  ? '!bg-blue-780 text-white'
+                  : '!bg-transparent text-blue-700 border-[1px] border-solid border-blue-700'
+            " [title]="
+              favorites.includes(+product.cons_producto)
+                ? 'Quitar de favoritos'
+                : 'Añadir a favoritos'
+            ">
+              <mat-icon class="text-lg -mt-[2px]">
+                {{
+                favorites.includes(+product.cons_producto)
+                ? 'favorite'
+                : 'favorite_border'
+                }}
+              </mat-icon>
+            </a>
+          </div>
+        </div>
+      </ng-container>
+
+      <div class="flex justify-center items-center p-5" *ngIf="isLoadingMoney">
+        <mat-spinner color="accent" mode="indeterminate" diameter="40"></mat-spinner>
+      </div>
+
+      <ng-container *ngIf="!isLoadingMoney">
+        <div *ngIf="product.promocion && product.promocion.valor_producto" class="!text-sm flex items-center mb-4">
+          <span *ngIf="product.promocion && product.promocion.valor_total" class="!text-sm mb-4">
+            Ahora:
+          </span>
+          <div class="line-through m-0 text-4xl">$ {{ getUnitDiscount(product,product.promocion.valor_producto) | number
+            }}</div>
+          <span class="ml-2 text-blue-700">- {{ product.promocion.porcentaje_descuento }}% {{ isIvaPermission === false
+            ? '+ IVA' : 'IVA Incluido' }}</span>
+        </div>
+        <div *ngIf="product.promocion && product.promocion.valor_producto">
+          <strong>{{ getUnitDiscount(product, product?.promocion?.valor_total) | currency: 'COP':'symbol-narrow'
+            }}</strong>
+          <span>{{" "+ product.coin }} {{ isIvaPermission === false ? '+ IVA' : 'IVA Incluido' }}</span>
+        </div>
+
+        <h5 *ngIf="!product.promocion" class=" !text-4xl mb-5 flex flex-col lg:items-end lg:flex-row">
+          $ {{ getUnitDiscount(product, product.valor) | number }} <span
+            class="ml-1 text-base font-medium text-blue-700">{{ product.coin }} {{ isIvaPermission === false ? '+ IVA' :
+            'IVA Incluido' }}</span>
+        </h5>
+
+      </ng-container>
+
+      <!--<h5 *ngIf="product.promocion && product.promocion.valor_total && !isIva && idUser" class="!text-sm mb-4">
+        Ahora: $ {{ product.promocion.valor_total | number }} {{ product.coin }}
+      </h5>
+
+
+      <h5 *ngIf="!(product.promocion && product.promocion.valor_total) && !idUser" class="!text-4xl mb-5 flex flex-col lg:items-end lg:flex-row">
+        $ {{ product.valor + product.valor * (product.iva / 100) | number }} <span class="ml-1 text-base font-medium text-blue-700">{{ product.coin }} IVA Incluido</span>
+      </h5> -->
+
+      <!-- <h5 *ngIf="!(product.promocion && product.promocion.valor_total) && !isIva && idUser" class="!text-4xl mb-5">
+        $ {{ product.valor | number }} {{ product.coin }}
+      </h5> -->
+
+      <section class="flex flex-col items-center mb-4 sm:items-start">
+        <div *ngIf="!isValid" class="product__selectPeriodo responsive--max--block">Colores Disponibles</div>
+        <div *ngIf="isValid" class="mb-4 text-base">Seleccionar los colores</div>
+        <mat-grid-list cols="3" rowHeight="2:1" class="w-full mb-4">
+
+          @for (item of colorList; track item.cod+'-'+$index) {
+
+          <mat-grid-tile *ngIf="validarColorOcultos(item.label)" class="!overflow-visible">
+            <div class="flex flex-col items-center justify-center my-2 sm:flex-row">
+              <div class="mt-2 product__selectPeriodo__colors__color__example cursor-pointer"
+                [ngStyle]="{ background: item.color }"
+                [ngClass]="{ 'product__selectPeriodo__colors__color__example--active': item.select && isValid }"
+                (click)="item.select = !item.select"></div>
+              <div class="mt-2 product__selectPeriodo__colors__color__title sm:ml-1">{{ item.label }}</div>
+            </div>
+          </mat-grid-tile>
+
+
+          }
+        </mat-grid-list>
+        <div class="relative inline-block px-3 text-white bg-pulqui">
+          <!-- <mat-icon class="text-pulqui absolute -right-8 text-2xl !w-6">label_important</mat-icon> -->
+          <p *ngIf="product.cantMin" class="!font-lg font-medium !mb-0">
+            Cantidad mínima de venta: {{ product.cantMin }}
+          </p>
+        </div>
+
+      </section>
+
+      <app-product-settings *ngIf="isValid" [payMethods]="product.pay_methods" [dataProduct]="product"
+        [idProduct]="idProducto" [colors]="colorList"></app-product-settings>
+
+      <section class="flex items-center justify-between mb-8">
+        <div class="">
+          <div class="flex items-center">
+            <ngx-stars [readonly]="true" [size]="1" [color]="'#f4b400'" [maxStars]="5" [initialStars]="product.score"
+              class="z-0 flex rate"></ngx-stars>
+            <div class="mb-2 ml-1 text-xs">( {{ product.score }} )</div>
+          </div>
+        </div>
+        <!-- <div class="ml-2 text-xs text-blue-700 truncate">Escribir Comentario</div> -->
+      </section>
+    </div>
+
+    <mat-divider></mat-divider>
+
+    <ng-container *ngIf="(screenSize$ | async) === 'mobile'">
+      <div class="my-8">
+        <h4 class="!text-xl font-medium mb-4">Detalle del producto</h4>
+        <ul class="!m-0 !p-0">
+          <li class="flex items-center bg-gray-200">
+            <span class="items-center w-2/3 h-full p-4 text-sm font-medium truncate bg-gray-200">
+              <div class="flex items-center h-full truncate">Marcas:</div>
+            </span>
+            <span class="h-full p-4 flex items-center bg-gray-100 w-3/4 !ml-0 text-sm">{{ caracteristicas.marca
+              }}</span>
+          </li>
+          <li class="flex items-center bg-gray-200"
+            *ngFor="let caracteristica of caracteristicas.caracteristicas; let i = index">
+            <span class="items-center w-2/3 h-full p-4 text-sm font-medium truncate bg-gray-200">
+              <div class="flex items-center h-full truncate">
+                {{ caracteristica.descripcion_1 }}:
+              </div>
+            </span>
+            <span class="h-full p-4 flex items-center bg-gray-100 w-3/4 !ml-0 text-sm">{{ caracteristica.valores[0]
+              }}</span>
+          </li>
+          <li class="flex items-center bg-gray-200" *ngIf="caracteristicas.url_pdf">
+            <span class="items-center w-2/3 h-full p-4 text-sm font-medium truncate bg-gray-200">
+              <div class="flex items-center h-full truncate">
+                Ficha técnica:
+              </div>
+            </span>
+            <span class="h-full p-4 flex items-center bg-gray-100 w-3/4 !ml-0 text-sm truncate">
+              <a [href]="caracteristicas.url_pdf" target="_blank">Ver Ficha Técnica</a>
+            </span>
+          </li>
+          <li class="flex items-center bg-gray-200" *ngIf="caracteristicas.url_pdf">
+            <span class="items-center w-2/3 h-full p-4 text-sm font-medium truncate bg-gray-200">
+              <div class="flex items-center h-full truncate">
+                Referencia:
+              </div>
+            </span>
+            <span class="h-full p-4 flex items-center bg-gray-100 w-3/4 !ml-0 text-sm truncate">
+              {{ product.referencia_adcom ? product.referencia_adcom : product.reference }}
+            </span>
+          </li>
+        </ul>
+      </div>
+    </ng-container>
+
+    <section class="mb-8 product__data">
+      <h4 class="!text-xl font-medium mb-4">Descripción</h4>
+      <div class="mb-4">
+        {{ product.description | textoCorto : verMas }}
+      </div>
+      <a class="text-blue-700" (click)="verMas = !verMas">{{ verMas ? 'Ver menos' : 'Ver más' }}</a>
+    </section>
+
+    <mat-divider></mat-divider>
+
+    <section *ngIf="!isValid" class="my-8">
+      <p class="!text-base mb-4" *ngIf="idUsuario">Este producto no está disponible para su rol</p>
+      <button *ngIf="!idUsuario" mat-raised-button
+        class="btn-block m-t-20 m-b-20 !bg-blue-700 w-full !text-white cursor-pointer" (click)="initSingup()">
+        COMPRAR
+      </button>
+    </section>
+
+    <section class="my-8">
+      <h4 class="!text-xl font-medium mb-4">Información del vendedor</h4>
+      <div (click)="goToCategory()" class="flex flex-row items-center gap-4 m-4 mt-4 pointer">
+        <mat-icon class="product__feactures__items__item__icon">person</mat-icon>
+        <div>{{ product.nombre_vendedor }}</div>
+      </div>
+      <div class="flex flex-row items-center gap-4 m-4 mt-4 pointer" (click)="goToCategory()">
+        <mat-icon class="product__feactures__items__item__icon">view_module</mat-icon>
+        <div class="text-blue-700">Ver más productos de este vendedor</div>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="flex flex-row gap-4 m-4 mt-4">
+        <mat-icon class="product__feactures__items__item__icon">check_circle_outline</mat-icon>
+        <div>Entrega rápida fácil</div>
+      </div>
+      <div class="flex flex-row items-center gap-4 m-4 mt-4">
+        <mat-icon class="product__feactures__items__item__icon">shield_check</mat-icon>
+        <div>¡Tus compras están seguras!</div>
+      </div>
+    </section>
+
+
+    <mat-divider></mat-divider>
+
+    <section class="my-8">
+      <h4 class="!text-xl font-medium mb-4">Métodos de pago</h4>
+      <div class="mb-4">
+        <img class="mb-4" src="../../../../assets/images/paid/mercadopago.png" />
+        <img class="mb-4" src="../../../../assets/images/paid/others.png" />
+      </div>
+      <button mat-button color="accent" class="!pl-0">Conoce otros medios de pago</button>
+    </section>
+
+    <mat-divider></mat-divider>
+
+    <section class="my-8">
+      <h4 class="!text-xl font-medium mb-4">Garantía</h4>
+      <p class="!text-base mb-4">Cuenta con garantía de satisfacción</p>
+      <p class="product__guarantee__text">Cursos de capacitación sobre la compra</p>
+      <p class="!text-base mb-4">Asesoría sobre garantía</p>
+      <button mat-button color="accent" class="!pl-0 !ml-0">Mas información</button>
+    </section>
+  </section>
+</article>

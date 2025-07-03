@@ -1,0 +1,114 @@
+<div *ngIf="data.type==1" class="overflow-y-auto">
+
+  @if(loading)
+  {
+  <div>
+    <mat-progress-spinner class="spinner" mode="indeterminate"></mat-progress-spinner>
+  </div>
+  }
+
+  <div class="flex px-14 mt-5 items-center">
+    <mat-icon class="text-pulqui">sync</mat-icon>
+    <p class="text-pulqui text-2xl !m-0">DEVOLUCIONES</p>
+  </div>
+
+  <mat-dialog-content class="w-full">
+
+    <div class="px-10">
+      <div class="flex gap-5">
+        <figure class="w-32 h-32 overflow-hidden shadow-xl m-0">
+          <img class="w-full h-full object-cover" src="{{data.enlace_imagen}}" />
+        </figure>
+        <div class="justify-center">
+          <div class="text-pulqui text-lg font-bold">{{data.nombre_producto}} </div>
+          <div>{{data.referencia}}</div>
+          <div>Cantidad: {{data.cantidad}}</div>
+          <div>{{data.valor | currency: 'USD':'symbol-narrow' }} {{data.moneda}}</div>
+        </div>
+      </div>
+      <div class="flex flex-col mt-5">
+        <p class="text-lg !mb-0">Escriba el número de devoluciones</p>
+        <div class="flex gap-2">
+          <mat-form-field class="border border-solid">
+            <input class="rounded-md" matInput [(ngModel)]="cantidad" (keypress)="numberOnly($event)"
+              (change)="changeEvent($event)" />
+          </mat-form-field>
+          <p class="flex items-center mt-auto">de {{data.cantidad}}</p>
+        </div>
+      </div>
+
+      <div class="flex flex-col mt-4">
+        <p class="text-lg !mb-0">¿Tienes alguna devolución?</p>
+        <mat-form-field class="border border-solid">
+          <textarea class="h-full w-full " matInput [(ngModel)]="motivo_solicitud"
+            placeholder="Escribe aquí"></textarea>
+        </mat-form-field>
+        <div>
+          @if(images.length<3) { <div
+            class="cursor-pointer border-x border-t-0 border-b border-solid flex items-center p-3 rounded-bl-md rounded-br-md"
+            (click)="fileInput.click()">
+            <mat-icon>attach_file</mat-icon>
+            <div class="cursor:pointer">Adjuntar archivo</div>
+            <input hidden type="file" (change)="fileChange($event)" #fileInput placeholder="Upload file"
+              accept=".jpg,.png,.jpeg" />
+        </div>
+        }`
+        <ol>
+          <li *ngFor="let item of images; index as i">
+            <p>{{item.name}}</p>
+            <div class="flex">
+              <button matTooltip="Eliminar Imagen" mat-icon-button (click)="borrarImagen(i)">x</button>
+              <figure class="w-32 h-32 overflow-hidden shadow-xl m-0">
+                <img class="w-full h-full object-cover" src={{item.base}} />
+              </figure>
+            </div>
+          </li>
+        </ol>
+      </div>
+
+    </div>
+</div>
+</mat-dialog-content>
+<mat-dialog-actions align="center" class="flex mt-4">
+  <button mat-flat-button type="button" (click)="enviar()" [color]="'primary'">Enviar Devolución</button>
+  <button mat-button type="button" [mat-dialog-close]="true" class="mr-2">Cancelar</button>
+</mat-dialog-actions>
+</div>
+
+
+<div *ngIf="data.type==2" class="overflow-y-auto">
+  <div class="flex px-14 mt-5 items-center">
+    <mat-icon class="text-pulqui">sync</mat-icon>
+    <p class="text-pulqui text-2xl !m-0"> {{((data.eleccion=="A")?"APROBAR":"RECHAZAR")}} DEVOLUCIONES </p>
+  </div>
+  <mat-dialog-content class="w-full">
+    <div class="px-10">
+
+      <div class="flex gap-5">
+        <figure class="w-32 h-32 overflow-hidden shadow-xl m-0">
+          <img class="w-full h-full object-cover" src="{{data.enlace_imagen}}" />
+        </figure>
+        <div>
+          <div class="text-pulqui text-lg font-bold">{{data.nombre_producto}} </div>
+          <div>{{data.referencia}}</div>
+          <div>Cantidad: {{data.cantidad}}</div>
+          <div>Cantidad de devolucion: {{data.cantidad_devolucion}}</div>
+          <div>Cliente: {{data.nombre_cliente}} {{data.apellido_comprador}}</div>
+          <p>fe cha: {{data.fecha_creacion | date:'MMM d, y, h:mm:ss a'}}</p>
+        </div>
+      </div>
+      <div class="flex flex-col mt-4">
+        <p class="text-lg !mb-0">Justifica el motivo {{((data.eleccion=="A")?"de la aprobación":"del Rechazo")}}.</p>
+
+        <mat-form-field class="border border-solid">
+          <textarea class="h-full w-full " matInput [(ngModel)]="motivo_solicitud"
+            placeholder="Escribe aquí"></textarea>
+        </mat-form-field>
+      </div>
+    </div>
+  </mat-dialog-content>
+  <mat-dialog-actions align="center" class="flex mt-4">
+    <button mat-flat-button type="button" (click)="confirmar()" [color]="'primary'">Confirmar</button>
+    <button mat-button type="button" [mat-dialog-close]="true" class="mr-2">Cancelar</button>
+  </mat-dialog-actions>
+</div>
